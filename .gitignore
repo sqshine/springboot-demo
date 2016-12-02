@@ -1,11 +1,14 @@
 # Maven #
 target/
+!.mvn/wrapper/maven-wrapper.jar
 
 # eclipse #
 .classpath
 .project
 .settings/
 
-# IDEA #
-.idea/
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
+*.ipr
