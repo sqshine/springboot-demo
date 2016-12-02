@@ -1,4 +1,4 @@
-package com.sqshine.Controller;
+package com.sqshine.controller;
 
 import com.sqshine.service.UseHelloService;
 import org.springframework.beans.factory.annotation.Autowired;
