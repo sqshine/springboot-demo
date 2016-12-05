@@ -45,7 +45,7 @@ public class HelloController {
         UseHelloService useHelloService = context.getBean(UseHelloService.class);
         String word = useHelloService.sayHello(" word");
         logger.info("注入内容：{}", word);
-        logger.info("书名：{},作者：{}", bookAuthor, bookName);
+        logger.info("书名：{},作者：{}", bookName, bookAuthor);
 
         logger.info("作者：{},性别：{}", authorSettings.getName(), authorSettings.getGender());
         return word;

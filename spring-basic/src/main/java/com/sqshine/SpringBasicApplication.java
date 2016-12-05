@@ -13,6 +13,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAspectJAutoProxy
 @EnableAsync
 @EnableScheduling
+//@EnableConfigurationProperties 加上这个不用AuthorSettings类上加@Component，否则需要加上@Component
+//@EnableConfigurationProperties(AuthorSettings.class)
 public class SpringBasicApplication {
 
     public static void main(String[] args) {
