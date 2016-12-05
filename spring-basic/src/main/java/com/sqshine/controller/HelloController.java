@@ -1,5 +1,6 @@
 package com.sqshine.controller;
 
+import com.sqshine.service.AsyncTaskService;
 import com.sqshine.service.DemoAnnotationService;
 import com.sqshine.service.DemoMethodService;
 import com.sqshine.service.UseHelloService;
@@ -21,6 +22,8 @@ public class HelloController {
     private DemoAnnotationService demoAnnotationService;
     @Autowired
     private DemoMethodService demoMethodService;
+    @Autowired
+    private AsyncTaskService asyncTaskService;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -31,6 +34,15 @@ public class HelloController {
         String word = useHelloService.sayHello(" word");
         logger.info("注入内容：{}", word);
         return word;
+    }
+
+    @GetMapping("/async")
+    public String async() {
+        for (int i = 0; i < 1000; i++) {
+            asyncTaskService.addAsyncTask(i);
+            asyncTaskService.addPlusAsyncTask(i);
+        }
+        return "OK";
     }
 
 }
