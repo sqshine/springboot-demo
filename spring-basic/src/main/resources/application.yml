@@ -9,8 +9,10 @@ spring:
   output:
     ansi:
       enabled: detect
+  profiles:
+    active: prod
       
-debug: false
+
 
 #logging:
 #  file: E:/log/aaa.log
@@ -22,7 +24,3 @@ debug: false
 #    org.springframework.web: INFO
 #    org.springframework.security: DEBUG
 #    org.springframework.cloud: DEBUG
-
-logging:
-  level:
-    com.sqshine: DEBUG
