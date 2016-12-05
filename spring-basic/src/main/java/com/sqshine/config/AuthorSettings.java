@@ -4,7 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "author",locations = "classpath:author.yml")//放到application.yml中则不用指定location
+//@ConfigurationProperties加载properties文件内的配置，prefix属性指定配置的前缀，locations可以指定自定义的文件位置，不指定默认使用application.properties(application.yml)。
+@ConfigurationProperties(prefix = "author",locations = "classpath:author.yml")
 public class AuthorSettings {
     private String name;
     private String gender;
