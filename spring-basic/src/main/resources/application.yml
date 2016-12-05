@@ -5,40 +5,17 @@ book:
   author: sqshine
   name: spring boot
   
-#  多彩输出
-#  如果你的终端支持ANSI，设置彩色输出会让日志更具可读性。通过在application.properties中设置spring.output.ansi.enabled参数来支持。
-#  NEVER：禁用ANSI-colored输出（默认项）
-#  DETECT：会检查终端是否支持ANSI，是的话就采用彩色输出（推荐项）
-#  ALWAYS：总是使用ANSI-colored格式输出，若终端不支持的时候，会有很多干扰信息，不推荐使用
 spring:
   output:
     ansi:
       enabled: detect
       
-#开启debug日志，默认为info
-#我们可以通过两种方式切换至DEBUG级别：
-#在运行命令后加入--debug标志，如：$ java -jar myapp.jar --debug
-#在application.properties中配置debug=true，该属性置为true的时候，核心Logger（包含嵌入式容器、hibernate、spring）会输出更多内容，但是你自己应用的日志并不会输出为DEBUG级别。
-debug: true
+debug: false
 
-#文件输出
-#Spring Boot默认配置只会输出到控制台，并不会记录到文件中，但是我们通常生产环境使用时都需要以文件方式记录。
-#若要增加文件输出，需要在application.properties中配置logging.file或logging.path属性。
-#logging.file，设置文件，可以是绝对路径，也可以是相对路径。如：logging.file=my.log
-#logging.path，设置目录，会在该目录下创建spring.log文件，并写入日志内容，如：logging.path=/var/log
-#日志文件会在10Mb大小的时候被截断，产生新的日志文件，默认级别为：ERROR、WARN、INFO
 #logging:
-#  #path: E:/log
 #  file: E:/log/aaa.log
 
 #级别控制
-#在Spring Boot中只需要在application.properties中进行配置完成日志记录的级别控制。
-#配置格式：logging.level.*=LEVEL
-#logging.level：日志级别控制前缀，*为包名或Logger名
-#LEVEL：选项TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF
-#举例：
-#logging.level.com.xxx=DEBUG：com.xxx包下所有class以DEBUG级别输出
-#logging.level.root=WARN：root日志以WARN级别输出
 #logging:
 #  level:
 #    ROOT: INFO
@@ -49,11 +26,3 @@ debug: true
 logging:
   level:
     com.sqshine: DEBUG
-    
-#    创建多环境配置文件
-#    application-dev.properties：开发环境
-#    application-test.properties：测试环境
-#    application-prod.properties：生产环境
-#    application.properties中添加属性：spring.profiles.active=dev（默认激活application-dev.properties配置）
-#    application-dev.properties和application-test.properties配置文件中添加日志级别定义：logging.level.com.didispace=DEBUG
-#    application-prod.properties配置文件中添加日志级别定义：logging.level.com.didispace=INFO
