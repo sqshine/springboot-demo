@@ -7,6 +7,7 @@ import com.sqshine.service.UseHelloService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,14 +26,23 @@ public class HelloController {
     @Autowired
     private AsyncTaskService asyncTaskService;
 
+    @Value("${book.author}")
+    private String bookAuthor;
+    @Value("${book.name}")
+    private String bookName;
+
+
     @GetMapping("/hello")
     public String sayHello() {
+
+        //AOP方法
         demoAnnotationService.add();
         demoMethodService.add();
 
         UseHelloService useHelloService = context.getBean(UseHelloService.class);
         String word = useHelloService.sayHello(" word");
         logger.info("注入内容：{}", word);
+        logger.info("书名：{},作者：{}", bookAuthor, bookName);
         return word;
     }
 

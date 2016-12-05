@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class SpringBasicApplication {
 
     public static void main(String[] args) {
+        //new SpringApplicationBuilder(SpringBasicApplication.class).bannerMode(Banner.Mode.OFF).run(args);
         SpringApplication.run(SpringBasicApplication.class, args);
 
     }
