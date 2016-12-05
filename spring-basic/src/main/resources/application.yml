@@ -4,3 +4,6 @@ server:
 book:
   author: sqshine
   name: spring boot
+#author:
+#  name: sqshine
+#  gender: male

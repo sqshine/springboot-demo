@@ -1,5 +1,6 @@
 package com.sqshine.controller;
 
+import com.sqshine.config.AuthorSettings;
 import com.sqshine.service.AsyncTaskService;
 import com.sqshine.service.DemoAnnotationService;
 import com.sqshine.service.DemoMethodService;
@@ -25,6 +26,8 @@ public class HelloController {
     private DemoMethodService demoMethodService;
     @Autowired
     private AsyncTaskService asyncTaskService;
+    @Autowired
+    private AuthorSettings authorSettings;
 
     @Value("${book.author}")
     private String bookAuthor;
@@ -43,6 +46,8 @@ public class HelloController {
         String word = useHelloService.sayHello(" word");
         logger.info("注入内容：{}", word);
         logger.info("书名：{},作者：{}", bookAuthor, bookName);
+
+        logger.info("作者：{},性别：{}", authorSettings.getName(), authorSettings.getGender());
         return word;
     }
 
