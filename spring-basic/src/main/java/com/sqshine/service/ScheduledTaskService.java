@@ -17,7 +17,7 @@ public class ScheduledTaskService {
 
     @Scheduled(fixedDelay = 5000)
     public void outputCurrentTime() {
-        logger.info("每隔5秒执行一次:{}", LocalDateTime.now().format(dateTimeFormatter));
+        logger.debug("每隔5秒执行一次:{}", LocalDateTime.now().format(dateTimeFormatter));
     }
 
     @Scheduled(cron = "0 26 10 ? * *")
