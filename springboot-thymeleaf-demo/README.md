@@ -1,0 +1,1 @@
+Thymeleaf 3和spring boot整合例子。可以参考官网https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-web-thymeleaf3
