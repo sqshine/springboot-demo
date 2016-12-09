@@ -21,6 +21,7 @@
     <modules>
         <module>spring-basic</module>
         <module>springboot-thymeleaf-demo</module>
+        <module>readinglist</module>
     </modules>
 
     <properties>
