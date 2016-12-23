@@ -6,6 +6,8 @@ book:
   name: spring boot
   
 spring:
+  datasource:
+    type: 
   output:
     ansi:
       enabled: detect
