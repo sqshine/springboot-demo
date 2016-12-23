@@ -1,6 +1,5 @@
 package com.sqshine;
 
-import com.alibaba.fastjson.JSON;
 import com.sqshine.conditional.LinuxCondition;
 import com.sqshine.conditional.WindowsCondition;
 import com.sqshine.service.HelloService;
@@ -51,35 +50,5 @@ public class SpringBasicApplication {
     public String linuxCondition() {
         System.out.println("条件加载：linux");
         return "linux";
-    }
-}
-
-class A{
-    String action;
-    String actionTime;
-    String data;
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public String getActionTime() {
-        return actionTime;
-    }
-
-    public void setActionTime(String actionTime) {
-        this.actionTime = actionTime;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 }
