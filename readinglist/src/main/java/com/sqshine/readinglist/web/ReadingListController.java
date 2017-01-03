@@ -5,10 +5,7 @@ import com.sqshine.readinglist.domain.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +16,13 @@ public class ReadingListController {
     //为了简便，这里直接使用了dao层，实际开发中需要一个service层。
     @Autowired
     private ReadingListRepository readingListRepository;
+
+    @GetMapping
+    @ResponseBody
+    public List<Book> books() {
+        List<Book> books = readingListRepository.findAll();
+        return books;
+    }
 
     @GetMapping("/{reader}")
     public String readersBooks(@PathVariable("reader") String reader, Model model) {
