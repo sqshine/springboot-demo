@@ -24,6 +24,13 @@ public class ReadingListController {
         return books;
     }
 
+    @GetMapping("/1")
+    @ResponseBody
+    public List<Book> books2() {
+        List<Book> books = readingListRepository.findAll();
+        return books;
+    }
+
     @GetMapping("/{reader}")
     public String readersBooks(@PathVariable("reader") String reader, Model model) {
 
