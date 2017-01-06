@@ -30,8 +30,8 @@ public class ReadinglistApplicationTests {
     //@Autowired
     //private WebApplicationContext webContext;
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    //@Autowired
+    //private ApplicationContext applicationContext;
 
     //@Before
     //public void setupMockMvc() {
