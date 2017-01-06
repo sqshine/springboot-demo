@@ -1,7 +1,13 @@
 spring:
   thymeleaf:
-    cache: false
     mode: HTML
+    #cache: false  #开发者工具dev-tools激活后，如下属性会设置为false。
+    # spring.thymeleaf.cache
+    # spring.freemarker.cache
+    # spring.velocity.cache
+    # spring.mustache.cache
+    # spring.groovy.template.cache
+
 #数据库配置  
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
