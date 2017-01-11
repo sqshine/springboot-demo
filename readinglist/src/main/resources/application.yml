@@ -65,3 +65,7 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+
+logging:
+    level:
+      com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。
