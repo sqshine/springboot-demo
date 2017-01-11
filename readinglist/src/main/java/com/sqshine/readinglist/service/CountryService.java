@@ -1,5 +1,6 @@
 package com.sqshine.readinglist.service;
 
+import com.github.pagehelper.PageHelper;
 import com.sqshine.readinglist.domain.mapper.CountryMapper;
 import com.sqshine.readinglist.domain.model.Country;
 import org.apache.ibatis.annotations.Param;
@@ -16,7 +17,8 @@ public class CountryService implements ICountryService {
     private CountryMapper countryMapper;
 
     @Override
-    public List<Country> getAll() {
+    public List<Country> getAll(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         return countryMapper.getAll();
     }
 

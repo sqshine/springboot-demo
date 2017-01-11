@@ -1,6 +1,6 @@
 package com.sqshine.readinglist.web;
 
-import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sqshine.readinglist.domain.model.Country;
 import com.sqshine.readinglist.service.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class CountryController {
 
     @GetMapping
     public List<Country> getAll() {
-        return countryService.getAll();
+        return countryService.getAll(1, Integer.MAX_VALUE);
     }
 
     @GetMapping("/{id}")
@@ -29,9 +29,9 @@ public class CountryController {
     }
 
     @GetMapping("/{page}/{pageSize}")
-    public List<Country> getListByPage(@PathVariable("page") int pageNume, @PathVariable int pageSize) {
-        PageHelper.startPage(pageNume, pageSize);
-        return countryService.getAll();
+    public PageInfo<Country> getListByPage(@PathVariable("page") int pageNum, @PathVariable int pageSize) {
+        List<Country> countries = countryService.getAll(pageNum, pageSize);
+        return new PageInfo<>(countries);
     }
 
     @GetMapping("/add")
