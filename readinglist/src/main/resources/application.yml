@@ -59,3 +59,9 @@ server:
   session:
     cookie:
       http-only: true
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
