@@ -8,5 +8,8 @@ import java.util.List;
 
 public interface ICountryService {
     List<Country> getAll();
+
     Country getById(@Param("id") int id);
+
+    Integer save(Country country);
 }

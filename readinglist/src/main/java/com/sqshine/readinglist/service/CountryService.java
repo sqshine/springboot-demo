@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -21,6 +22,13 @@ public class CountryService implements ICountryService {
 
     @Override
     public Country getById(@Param("id") int id) {
-        return countryMapper.getById(1);
+        return countryMapper.getById(id);
     }
+
+    @Override
+    @Transactional
+    public Integer save(Country country) {
+        return countryMapper.save(country);
+    }
+
 }

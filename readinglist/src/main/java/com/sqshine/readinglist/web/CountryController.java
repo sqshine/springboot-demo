@@ -25,12 +25,21 @@ public class CountryController {
 
     @GetMapping("/{id}")
     public Country getById(@PathVariable int id) {
-        return countryService.getById(1);
+        return countryService.getById(id);
     }
 
     @GetMapping("/{page}/{pageSize}")
-    public List<Country> getListByPage(@PathVariable("page") int pageNume,@PathVariable int pageSize) {
+    public List<Country> getListByPage(@PathVariable("page") int pageNume, @PathVariable int pageSize) {
         PageHelper.startPage(pageNume, pageSize);
         return countryService.getAll();
+    }
+
+    @GetMapping("/add")
+    public Country save() {
+        Country country = new Country();
+        country.setCountrycode("ZH");
+        country.setCountryname("china");
+        countryService.save(country);
+        return country;
     }
 }
