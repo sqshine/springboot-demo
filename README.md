@@ -25,8 +25,7 @@ spring
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-        
-    datasource1:
+        datasource1:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
         url: jdbc:mysql://192.168.1.71:3306/spring_boot_test
@@ -48,9 +47,7 @@ spring
 
 编写配置类
 @Configuration
-
 @EnableConfigurationProperties(DataSourceProperties.class)
-
 public class DruidConfiguration {
 
     @Primary
@@ -69,4 +66,4 @@ public class DruidConfiguration {
                 //additional customizations
                 .build();
     }
-}
+ }
