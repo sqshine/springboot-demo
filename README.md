@@ -6,6 +6,7 @@ spring boot 示例程序
 application.yml
 
 spring
+
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
@@ -46,8 +47,11 @@ spring
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
 编写配置类
+
 @Configuration
+
 @EnableConfigurationProperties(DataSourceProperties.class)
+
 public class DruidConfiguration {
 
     @Primary
@@ -65,5 +69,5 @@ public class DruidConfiguration {
         return properties.initializeDataSourceBuilder()
                 //additional customizations
                 .build();
-    }
+    } 
  }
