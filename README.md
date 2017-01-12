@@ -2,7 +2,9 @@
 spring boot 示例程序
 
 配置druid多数据源的方法
+
 application.yml
+
 spring
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
@@ -23,6 +25,7 @@ spring
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+        
     datasource1:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
@@ -45,7 +48,9 @@ spring
 
 编写配置类
 @Configuration
+
 @EnableConfigurationProperties(DataSourceProperties.class)
+
 public class DruidConfiguration {
 
     @Primary
