@@ -29,6 +29,9 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
+  profiles:
+    active: dev
+
 ## 配置获取连接等待超时的时间
 #spring.datasource.maxWait=60000
 ## 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
@@ -61,11 +64,14 @@ server:
       http-only: true
 
 pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 
 logging:
-    level:
-      com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。
+#  path: D:/
+  file: D:/spring_boot_test.log
+#  level:
+#    com.sqshine: DEBUG
+#    com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。

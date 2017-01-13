@@ -1,8 +1,11 @@
 package com.sqshine.readinglist.web;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.sqshine.readinglist.domain.model.Country;
 import com.sqshine.readinglist.service.ICountryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/country")
 public class CountryController {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ICountryService countryService;
@@ -31,6 +36,7 @@ public class CountryController {
     @GetMapping("/{page}/{pageSize}")
     public PageInfo<Country> getListByPage(@PathVariable("page") int pageNum, @PathVariable int pageSize) {
         List<Country> countries = countryService.getAll(pageNum, pageSize);
+        logger.debug("List<Country>======{}", JSON.toJSONString(countries));
         return new PageInfo<>(countries);
     }
 

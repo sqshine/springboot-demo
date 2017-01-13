@@ -4,6 +4,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
@@ -13,6 +15,8 @@ import org.springframework.http.converter.HttpMessageConverter;
 @SpringBootApplication
 @MapperScan("com.sqshine.readinglist.domain.mapper")
 public class ReadinglistApplication {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReadinglistApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(ReadinglistApplication.class, args);
