@@ -6,9 +6,9 @@
             <appender-ref ref="CONSOLE"/>
         </logger>
         <!--输出mybatis的sql语句。-->
-        <logger name="com.sqshine.readinglist.domain.mapper" level="TRACE" additivity="false">
+<!--        <logger name="com.sqshine.readinglist.domain.mapper" level="TRACE" additivity="false">
             <appender-ref ref="CONSOLE"/>
-        </logger>
+        </logger>-->
     </springProfile>
     <springProfile name="production">
         <logger name="com.sqshine" level="WARN" additivity="false">

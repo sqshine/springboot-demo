@@ -69,9 +69,9 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-logging:
+#logging:
 #  path: D:/
-  file: D:/spring_boot_test.log
+#  file: D:/spring_boot_test.log
 #  level:
 #    com.sqshine: DEBUG
 #    com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。

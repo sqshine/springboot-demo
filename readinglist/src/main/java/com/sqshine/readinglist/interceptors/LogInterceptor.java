@@ -13,13 +13,13 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        logger.info("Before process request");
+        logger.debug("LogInterceptor=====preHandle");
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        logger.info("Method executed");
+        logger.debug("LogInterceptor=====postHandle");
         super.postHandle(request, response, handler, modelAndView);
     }
 }
