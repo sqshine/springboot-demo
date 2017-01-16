@@ -48,6 +48,7 @@ public class ReadinglistApplication implements CommandLineRunner {
             logger.debug("删除 redis key [{}] 数据", key);
         }
         ops.set(key, "redis的值");
+        //ops.setIfAbsent(key, "redis的值");
         logger.debug("设置 redis key [{}] , value = {} ", key, ops.get(key));
     }
 }
