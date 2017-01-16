@@ -1,37 +1,18 @@
+
 spring:
-  thymeleaf:
-    mode: HTML
-    #cache: false  #开发者工具dev-tools激活后，如下属性会设置为false。
-    # spring.thymeleaf.cache
-    # spring.freemarker.cache
-    # spring.velocity.cache
-    # spring.mustache.cache
-    # spring.groovy.template.cache
-
-#数据库配置  
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.71:3306/spring_boot_test
-    username: root
-    password: root
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 6000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-
   profiles:
     active: dev
 
+#cache: false  #开发者工具dev-tools激活后，如下属性会设置为false。
+# spring.thymeleaf.cache
+# spring.freemarker.cache
+# spring.velocity.cache
+# spring.mustache.cache
+# spring.groovy.template.cache
+  thymeleaf:
+    mode: HTML
+
+#数据库配置
 ## 配置获取连接等待超时的时间
 #spring.datasource.maxWait=60000
 ## 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
@@ -56,6 +37,57 @@ spring:
 # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
 #spring.datasource.connectionProperties=druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 # 合并多个DruidDataSource的监控数据
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.71:3306/spring_boot_test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: root
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 6000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+########################################################
+###REDIS (RedisProperties) redis基本配置；
+########################################################
+# database name
+#spring.redis.database=0
+# server host1
+#spring.redis.host=127.0.0.1
+# server password
+#spring.redis.password=
+#connection port
+#spring.redis.port=6379
+#pool settings ...
+#spring.redis.pool.max-idle=8
+#spring.redis.pool.min-idle=0
+#spring.redis.pool.max-active=8
+#spring.redis.pool.max-wait=-1
+# name of Redis server
+#spring.redis.sentinel.master=
+# comma-separated list of host:port pairs
+#spring.redis.sentinel.nodes=
+
+  redis:
+    database: 0
+    host: 192.168.1.91
+    port: 6379
+    password: feibaredis
+    pool:
+      max-active: 8
+      min-idle: 0
+      max-wait: -1
+      max-idle: 8
 
 server:
   port: 8000
@@ -75,3 +107,5 @@ pagehelper:
 #  level:
 #    com.sqshine: DEBUG
 #    com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。
+
+
