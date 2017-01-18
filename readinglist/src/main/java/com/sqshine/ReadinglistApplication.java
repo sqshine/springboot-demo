@@ -1,8 +1,5 @@
 package com.sqshine;
 
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.http.converter.HttpMessageConverter;
 
 @SpringBootApplication
 @MapperScan("com.sqshine.readinglist.domain.mapper")

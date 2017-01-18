@@ -1,14 +1,28 @@
 package com.sqshine.readinglist.domain.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * 对于复杂对象，需要@Valid
+ * message最好放到常量中处理，不要硬编码
+ */
 public class Post {
 
-    @Size(min = 4, max = 35)
+    @NotBlank(message = "title不能为空")
+    @Max(100)
     private String title;
 
-    @Size(min = 3, max = 1000)
+    @Size(min = 3, max = 100, message = "content内容必须在3和100之间")
     private String content;
+
+    @NotNull
+    @Valid
+    private Book book;
 
     public String getTitle() {
         return title;
@@ -24,5 +38,13 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }

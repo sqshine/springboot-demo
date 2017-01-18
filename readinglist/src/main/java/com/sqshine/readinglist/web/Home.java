@@ -1,14 +1,15 @@
 package com.sqshine.readinglist.web;
 
 import com.alibaba.fastjson.JSON;
+import com.sqshine.readinglist.domain.model.Book;
 import com.sqshine.readinglist.domain.model.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -16,14 +17,17 @@ import javax.validation.Valid;
 public class Home {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public String index(Post post) {
         post.setTitle("1");
         return "index";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @PostMapping("/")
     public String addNewPost(@Valid Post post, BindingResult bindingResult, Model model) {
+        Book book = new Book();
+        book.setTitle("book title");
+        post.setBook(book);
         if (bindingResult.hasErrors()) {
 
 /*            for (ObjectError oe : bindingResult.getAllErrors()) {
@@ -45,11 +49,25 @@ public class Home {
                     updatedBindingResult.addError(updatedFieldError);
                 }
             }*/
+
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                logger.debug(JSON.toJSONString(error));
+            }
             logger.debug(JSON.toJSONString(bindingResult));
+            logger.debug(JSON.toJSONString(post));
             return "index";
         }
         model.addAttribute("title", post.getTitle());
         model.addAttribute("content", post.getContent());
         return "result";
+    }
+
+    @PutMapping("/")
+    @ResponseBody
+    public String addNew(@Valid @RequestBody Post post, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return JSON.toJSONString(bindingResult);
+        }
+        return "success";
     }
 }

@@ -1,5 +1,7 @@
 package com.sqshine.readinglist.domain.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +12,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "reader不能为空")
     private String reader;
     private String isbn;
     private String title;
