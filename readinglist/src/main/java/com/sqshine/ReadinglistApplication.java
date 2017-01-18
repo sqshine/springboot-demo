@@ -29,7 +29,8 @@ public class ReadinglistApplication implements CommandLineRunner {
         SpringApplication.run(ReadinglistApplication.class, args);
     }
 
-    @Bean
+    //使用fastjson作为json解析器
+/*    @Bean
     public HttpMessageConverters fastJsonHttpMessageConverters() {
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
@@ -37,7 +38,7 @@ public class ReadinglistApplication implements CommandLineRunner {
         fastConverter.setFastJsonConfig(fastJsonConfig);
         HttpMessageConverter<?> converter = fastConverter;
         return new HttpMessageConverters(converter);
-    }
+    }*/
 
     @Override
     public void run(String... args) throws Exception {
