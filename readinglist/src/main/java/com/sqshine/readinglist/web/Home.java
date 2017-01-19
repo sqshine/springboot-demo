@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class Home {
@@ -49,12 +51,17 @@ public class Home {
                     updatedBindingResult.addError(updatedFieldError);
                 }
             }*/
-
+            /*  List<ObjectError> list = bindingResult.getAllErrors();
+            for (ObjectError error : list) {
+                logger.debug("ObjectError code:{},argments:{},message:{}", error.getCode(), error.getArguments(), error.getDefaultMessage());
+                logger.debug("ObjectError json:{}", JSON.toJSONString(error));
+            }*/
             for (FieldError error : bindingResult.getFieldErrors()) {
-                logger.debug(JSON.toJSONString(error));
+                logger.debug("FieldError Field:{},message:{}", error.getField(), error.getDefaultMessage());
+                logger.debug("FieldError json:{}", JSON.toJSONString(error));
+                //注意如果book可为null，则去掉book的校验信息
             }
-            logger.debug(JSON.toJSONString(bindingResult));
-            logger.debug(JSON.toJSONString(post));
+            //logger.debug(JSON.toJSONString(bindingResult));
             return "index";
         }
         model.addAttribute("title", post.getTitle());
@@ -66,6 +73,10 @@ public class Home {
     @ResponseBody
     public String addNew(@Valid @RequestBody Post post, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                logger.debug("FieldError Field:{},message:{}", error.getField(), error.getDefaultMessage());
+                logger.debug("FieldError json:{}", JSON.toJSONString(error));
+            }
             return JSON.toJSONString(bindingResult);
         }
         return "success";
