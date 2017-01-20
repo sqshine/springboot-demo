@@ -1,5 +1,7 @@
 package com.sqshine;
 
+import com.sqshine.readinglist.enums.Events;
+import com.sqshine.readinglist.enums.States;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.statemachine.StateMachine;
 
 @SpringBootApplication
 @MapperScan("com.sqshine.readinglist.domain.mapper")
@@ -18,6 +21,9 @@ public class ReadinglistApplication implements CommandLineRunner {
 
     @Autowired
     private StringRedisTemplate template;
+
+    @Autowired
+    private StateMachine<States, Events> stateMachine;
 
     public static void main(String[] args) {
         SpringApplication.run(ReadinglistApplication.class, args);
@@ -45,5 +51,9 @@ public class ReadinglistApplication implements CommandLineRunner {
         ops.set(key, "redis的值");
         //ops.setIfAbsent(key, "redis的值");
         logger.debug("设置 redis key [{}] , value = {} ", key, ops.get(key));
+
+        stateMachine.start();
+        stateMachine.sendEvent(Events.PAY);
+        stateMachine.sendEvent(Events.RECEIVE);
     }
 }
