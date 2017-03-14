@@ -19,8 +19,8 @@ public class ReadinglistApplication implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(ReadinglistApplication.class);
 
-    @Autowired
-    private StringRedisTemplate template;
+    //@Autowired
+    //private StringRedisTemplate template;
 
     @Autowired
     private StateMachine<States, Events> stateMachine;
@@ -42,7 +42,7 @@ public class ReadinglistApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        ValueOperations<String, String> ops = template.opsForValue();
+/*        ValueOperations<String, String> ops = template.opsForValue();
         String key = "spring.boot.redis.test";
         if (template.hasKey(key)) {
             ops.getOperations().delete(key);
@@ -50,7 +50,7 @@ public class ReadinglistApplication implements CommandLineRunner {
         }
         ops.set(key, "redis的值");
         //ops.setIfAbsent(key, "redis的值");
-        logger.debug("设置 redis key [{}] , value = {} ", key, ops.get(key));
+        logger.debug("设置 redis key [{}] , value = {} ", key, ops.get(key));*/
 
         stateMachine.start();
         stateMachine.sendEvent(Events.PAY);
