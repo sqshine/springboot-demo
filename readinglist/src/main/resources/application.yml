@@ -101,11 +101,17 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
+#endpoints:
+#  cors:
+#    allowed-origins: *
+#    allowed-methods: GET,POST,PUT,DELETE,HEAD,OPTIONS
+
 #logging:
 #  path: D:/
 #  file: D:/spring_boot_test.log
 #  level:
 #    com.sqshine: DEBUG
 #    com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。
+
 
 

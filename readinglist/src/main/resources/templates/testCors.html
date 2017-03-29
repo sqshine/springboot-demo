@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello CORS</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                        url: "http://localhost:8000/greeting?name=sqshine",
+                        type: "get"
+                    }).then(function(data, status, jqxhr) {
+                    $('.greeting-id-get').append(data.id);
+                    $('.greeting-content-get').append(data.content);
+                    console.log(jqxhr);
+                });
+                $.ajax({
+                        url: "http://localhost:8000/greeting?name=sqshine",
+                        type: "POST"
+                    }).then(function(data, status, jqxhr) {
+                    $('.greeting-id-post').append(data.id);
+                    $('.greeting-content-post').append(data.content);
+                    console.log(jqxhr);
+                });
+                $.ajax({
+                        url: "http://localhost:8000/greeting?name=sqshine",
+                        type: "put"
+                    }).then(function(data, status, jqxhr) {
+                    $('.greeting-id-put').append(data.id);
+                    $('.greeting-content-put').append(data.content);
+                    console.log(jqxhr);
+                });
+                $.ajax({
+                        url: "http://localhost:8000/greeting?name=sqshine",
+                        type: "delete"
+                    }).then(function(data, status, jqxhr) {
+                    $('.greeting-id-delete').append(data.id);
+                    $('.greeting-content-delete').append(data.content);
+                    console.log(jqxhr);
+                });
+            });
+            
+        </script>
+    </head>
+
+    <body>
+        <div>
+            <p class="greeting-id-get">The get ID is </p>
+            <p class="greeting-content-get">The content is </p>
+        </div>
+        <div>
+            <p class="greeting-id-post">The post ID is </p>
+            <p class="greeting-content-post">The content is </p>
+        </div>
+        <div>
+            <p class="greeting-id-put">The put ID is </p>
+            <p class="greeting-content-put">The content is </p>
+        </div>
+        <div>
+            <p class="greeting-id-delete">The delete ID is </p>
+            <p class="greeting-content-delete">The content is </p>
+        </div>
+    </body>
+</html>
