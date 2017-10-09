@@ -3,10 +3,14 @@ package com.sqshine.readinglist.web;
 import com.sqshine.readinglist.domain.dao.ReadingListRepository;
 import com.sqshine.readinglist.domain.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Controller
@@ -40,5 +44,13 @@ public class ReadingListController {
         book.setReader(reader);
         readingListRepository.save(book);
         return "redirect:/book/{reader}";
+    }
+
+    @GetMapping(value = "/pdf")
+    public @ResponseBody
+    byte[] getImageAsByteArray() throws IOException {
+        ClassPathResource imgFile = new ClassPathResource("static/01.pdf");
+        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+        return bytes;
     }
 }
