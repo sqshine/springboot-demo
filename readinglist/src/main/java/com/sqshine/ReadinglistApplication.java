@@ -43,16 +43,4 @@ public class ReadinglistApplication implements CommandLineRunner {
         stateMachine.sendEvent(Events.PAY);
         stateMachine.sendEvent(Events.RECEIVE);*/
     }
-
-/*    @Bean
-    public WebMvcConfigurer corsConfigurer() {public
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD");
-            }
-        };
-    }*/
 }
