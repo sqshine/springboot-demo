@@ -72,7 +72,7 @@ public class WebMvcConfig {
         return new HttpMessageConverters((HttpMessageConverter<?>) fastConverter);
     }
 
-    @SuppressWarnings("unchecked")
+    /*@SuppressWarnings("unchecked")
     @Bean
     public FilterRegistrationBean getXssFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -81,8 +81,8 @@ public class WebMvcConfig {
         registration.setFilter(new XssFilter());
         registration.addUrlPatterns("/*");
         registration.setName("XssFilter");
-        registration.setOrder(1);
+        //registration.setOrder(1);
         return registration;
-    }
+    }*/
 
 }
