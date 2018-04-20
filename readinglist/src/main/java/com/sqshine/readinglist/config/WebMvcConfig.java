@@ -48,6 +48,10 @@ public class WebMvcConfig {
         };
     }
 
+    /**
+     * FastJson替代Jackson
+     * @return HttpMessageConverters
+     */
     @Bean
     public HttpMessageConverters fastJsonHttpMessageConverters() {
         // 1、需要先定义一个 convert 转换消息的对象;
@@ -68,7 +72,7 @@ public class WebMvcConfig {
         return new HttpMessageConverters((HttpMessageConverter<?>) fastConverter);
     }
 
-
+    @SuppressWarnings("unchecked")
     @Bean
     public FilterRegistrationBean getXssFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
