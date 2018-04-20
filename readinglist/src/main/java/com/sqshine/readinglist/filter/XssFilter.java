@@ -6,13 +6,16 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * @author sqshine
+ */
 public class XssFilter implements Filter {
 
     private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

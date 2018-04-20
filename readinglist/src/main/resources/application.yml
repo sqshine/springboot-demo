@@ -37,25 +37,39 @@ spring:
 # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
 #spring.datasource.connectionProperties=druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 # 合并多个DruidDataSource的监控数据
+
+
+## 加密后的密码（原密码 123456）
+#spring.datasource.password=WVMjPhfXQrIsWRo0/RCqAVvYtTU9WNVToKJohb8AlUmHwnV6vwFL+FM2CNFDMJwGHW1iCmyaUlF+sgvFdogqEA==
+## 公钥
+#publickey=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIiwHpFrDijV+GzwRTzWJk8D3j3jFfhsMFJ/7k1NTvBuLgL+TdIHgaMNOIEjHpXzuvX38J3FtOK8hLrySncVGOMCAwEAAQ==
+## 配置 connection-properties，启用加密，配置公钥。
+#spring.datasource.druid.connection-properties=config.decrypt=true;config.decrypt.key=${publickey}
+## 启动ConfigFilter
+#spring.datasource.druid.filter.config.enabled=true
+
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.3.221:3307/spring_boot_test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: bestsign
     password: ssqian2016
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 6000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 6000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+
 
 ########################################################
 ###REDIS (RedisProperties) redis基本配置；
@@ -91,9 +105,10 @@ spring:
 
 server:
   port: 8000
-  session:
-    cookie:
-      http-only: true
+  servlet:
+    session:
+      cookie:
+        http-only: true
 
 pagehelper:
   helperDialect: mysql
@@ -101,8 +116,12 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 management:
-  security:
-    enabled: false
+  endpoints:
+    enabled-by-default: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 
 #logging:
@@ -111,6 +130,3 @@ management:
 #  level:
 #    com.sqshine: DEBUG
 #    com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。
-
-
-
