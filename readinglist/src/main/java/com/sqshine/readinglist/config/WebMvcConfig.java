@@ -3,10 +3,8 @@ package com.sqshine.readinglist.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.sqshine.readinglist.filter.XssFilter;
 import com.sqshine.readinglist.interceptors.LogInterceptor;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -15,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.DispatcherType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +57,7 @@ public class WebMvcConfig {
         //2、添加fastJson 的配置信息，比如：是否要格式化返回的json数据;
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteNullStringAsEmpty);
+        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
 
         //2-1 处理中文乱码问题
         List<MediaType> fastMediaTypes = new ArrayList<>();
