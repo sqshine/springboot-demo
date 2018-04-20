@@ -9,24 +9,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
+/**
+ * @author sqshine
+ *
+ * 此处thymeleaf模板代码有问题，不要使用
+ */
 @Controller
 public class Home {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @GetMapping("/")
     public String index(Post post) {
-        post.setTitle("1");
+        post.setTitle("Index-首页");
         return "index";
     }
 
     @PostMapping("/")
-    public String addNewPost(@Valid Post post, BindingResult bindingResult, Model model) {
+    public String addNewPost(@Validated Post post, BindingResult bindingResult, Model model) {
         Book book = new Book();
         book.setTitle("book title");
         post.setBook(book);
@@ -71,7 +75,7 @@ public class Home {
 
     @PutMapping("/")
     @ResponseBody
-    public String addNew(@Valid @RequestBody Post post, BindingResult bindingResult) {
+    public String addNew(@Validated @RequestBody Post post, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             for (FieldError error : bindingResult.getFieldErrors()) {
                 logger.debug("FieldError Field:{},message:{}", error.getField(), error.getDefaultMessage());
