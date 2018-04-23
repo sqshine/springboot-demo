@@ -12,11 +12,14 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
+/**
+ * @author sqshine
+ */
 @Aspect
 @Component
 public class LogAspect {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     @Pointcut("@annotation(MyAop)")
     public void annotationPointCut() {

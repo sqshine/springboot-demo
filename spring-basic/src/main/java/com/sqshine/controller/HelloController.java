@@ -13,10 +13,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author sqshine
+ */
 @RestController
 public class HelloController {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
     @Autowired
     private ApplicationContext context;

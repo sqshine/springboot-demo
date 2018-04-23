@@ -8,8 +8,12 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-@Configuration
-@EnableConfigurationProperties(DataSourceProperties.class)
+/**
+ * 使用了druid starter，不用此类
+ */
+@Deprecated
+//@Configuration
+//@EnableConfigurationProperties(DataSourceProperties.class)
 public class DruidConfiguration {
 
     @Bean

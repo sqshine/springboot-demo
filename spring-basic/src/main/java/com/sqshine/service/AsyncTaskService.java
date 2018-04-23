@@ -6,10 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author sqshine
+ */
 @Service
 public class AsyncTaskService {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(AsyncTaskService.class);
 
     @Async
     public void addAsyncTask(Integer i) {

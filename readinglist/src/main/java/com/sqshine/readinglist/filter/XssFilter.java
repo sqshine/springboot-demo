@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class XssFilter implements Filter {
 
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger(XssFilter.class);
 
 
     @Override

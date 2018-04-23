@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author sqshine
+ */
 @Component
 public final class RedisClientTemplate {
 
@@ -54,7 +57,7 @@ public final class RedisClientTemplate {
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
         String jsonObject = ops.get(key);
         if (StringUtils.isEmpty(jsonObject)) {
-            return new ArrayList<T>();
+            return new ArrayList<>();
         }
         return JSON.parseArray(jsonObject, clazz);
     }

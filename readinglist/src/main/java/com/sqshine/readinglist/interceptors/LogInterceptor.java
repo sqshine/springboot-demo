@@ -7,12 +7,15 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author sqshine
+ */
 public class LogInterceptor extends HandlerInterceptorAdapter {
 
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger(LogInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         logger.debug("LogInterceptor=====preHandle");
         return true;
     }
