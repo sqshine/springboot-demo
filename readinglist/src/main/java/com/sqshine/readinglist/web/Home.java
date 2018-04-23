@@ -21,7 +21,7 @@ import javax.validation.Valid;
  */
 @Controller
 public class Home {
-    private final Logger logger = LoggerFactory.getLogger(Home.class);
+    private static final Logger logger = LoggerFactory.getLogger(Home.class);
 
     @GetMapping("/")
     public String index(Post post) {

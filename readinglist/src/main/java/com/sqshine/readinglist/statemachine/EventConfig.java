@@ -8,10 +8,13 @@ import org.springframework.statemachine.annotation.OnTransitionEnd;
 import org.springframework.statemachine.annotation.OnTransitionStart;
 import org.springframework.statemachine.annotation.WithStateMachine;
 
+/**
+ * @author sqshine
+ */
 @WithStateMachine
 public class EventConfig {
 
-    private final Logger logger = LoggerFactory.getLogger(EventConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(EventConfig.class);
 
     @OnTransition(target = "UNPAID")
     public void create() {

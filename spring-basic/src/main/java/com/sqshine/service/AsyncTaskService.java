@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AsyncTaskService {
 
-    private final Logger logger = LoggerFactory.getLogger(AsyncTaskService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AsyncTaskService.class);
 
     @Async
     public void addAsyncTask(Integer i) {

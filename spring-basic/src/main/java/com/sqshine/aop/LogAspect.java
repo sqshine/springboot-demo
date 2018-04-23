@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 @Component
 public class LogAspect {
 
-    private final Logger logger = LoggerFactory.getLogger(LogAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     @Pointcut("@annotation(MyAop)")
     public void annotationPointCut() {

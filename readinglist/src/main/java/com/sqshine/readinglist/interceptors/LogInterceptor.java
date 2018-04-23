@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LogInterceptor extends HandlerInterceptorAdapter {
 
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(LogInterceptor.class);
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(LogInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {

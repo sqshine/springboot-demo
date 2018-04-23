@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class ScheduledTaskService {
 
-    private final Logger logger = LoggerFactory.getLogger(ScheduledTaskService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ScheduledTaskService.class);
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss n");
 
 
