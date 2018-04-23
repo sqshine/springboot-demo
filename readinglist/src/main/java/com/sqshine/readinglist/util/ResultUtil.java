@@ -5,10 +5,10 @@ import com.sqshine.readinglist.domain.model.Result;
 /**
  * @author sqshine
  */
-public class ResultUtil<T> {
+public class ResultUtil {
 
-    public static Result success(Object object) {
-        Result result = new Result();
+    public static <T>Result<T> success(T object) {
+        Result<T> result = new Result<>();
         result.setCode(0);
         result.setMessage("成功");
         result.setData(object);
@@ -26,8 +26,9 @@ public class ResultUtil<T> {
         return result;
     }
 
-    public static Result error(Integer code, String msg, Object data) {
-        Result result = new Result();
+    public static <T>Result<T> error(Integer code, String msg,T data)
+    {
+        Result<T> result = new Result<>();
         result.setCode(code);
         result.setMessage(msg);
         result.setData(data);
