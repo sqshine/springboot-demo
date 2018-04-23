@@ -10,7 +10,7 @@ public class Result<T> {
     /** 返回码 */
     private Integer code;
     /** 提示信息 */
-    private String msg;
+    private String message;
     /** 返回数据 */
     private T data;
 
@@ -22,12 +22,12 @@ public class Result<T> {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {

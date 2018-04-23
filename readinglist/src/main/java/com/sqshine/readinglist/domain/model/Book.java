@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @author sqshine
+ */
 @Entity
 public class Book {
     @Id
@@ -14,6 +17,7 @@ public class Book {
     private Long id;
     @NotBlank(message = "reader不能为空")
     private String reader;
+    @NotBlank(message = "ISBN不能为空")
     private String isbn;
     private String title;
     private String author;

@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 /**
  * @author sqshine
- *
+ * <p>
  * 此处thymeleaf模板代码有问题，不要使用
  */
 @Controller
@@ -27,6 +27,18 @@ public class Home {
     public String index(Post post) {
         post.setTitle("Index-首页");
         return "index";
+    }
+
+    /**
+     * 测试参数不通过时，转到全局异常处理的参数异常处理
+     *
+     * @param book 实体
+     * @return book 对象
+     */
+    @PostMapping("/book")
+    @ResponseBody
+    public Book validPost(@Validated @RequestBody Book book) {
+        return book;
     }
 
     @PostMapping("/")

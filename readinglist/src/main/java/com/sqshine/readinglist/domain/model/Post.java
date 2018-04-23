@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 /**
  * 对于复杂对象，需要@Valid
  * message最好放到常量中处理，不要硬编码
+ * @author sqshine
  */
 public class Post {
 
