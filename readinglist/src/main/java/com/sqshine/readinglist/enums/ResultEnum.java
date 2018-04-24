@@ -6,8 +6,8 @@ package com.sqshine.readinglist.enums;
 
 public enum ResultEnum {
 
-    UNKONW_ERROR(-1, "未知错误"),
-    SUCCESS(0, "成功"),
+    UNKONW_ERROR(500, "未知错误"),
+    SUCCESS(200, "成功"),
     FILE_SIZE_LARGE(900, "文件的总大小不能超过10MB，请压缩后重新上传"),
     PERMISSION_DENY(901, "越权操作"),
     OPERATE_FAIL(902, "操作失败"),
