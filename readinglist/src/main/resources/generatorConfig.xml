@@ -33,7 +33,8 @@
                              type="XMLMAPPER"/>
 
 
-        <table tableName="sys_user"/>
+        <table tableName="sys_user">
+        </table>
 
     </context>
 </generatorConfiguration>

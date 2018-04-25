@@ -110,10 +110,26 @@ server:
       cookie:
         http-only: true
 
+mybatis:
+  type-aliases-package: com.sqshine.readinglist.domain.model
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    default-executor-type: reuse
+
+#    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+mapper:
+  mappers:
+      - com.sqshine.readinglist.util.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+
 pagehelper:
-  helperDialect: mysql
+  helper-dialect: mysql
   reasonable: true
-  supportMethodsArguments: true
+  support-methods-arguments: true
   params: count=countSql
 management:
   endpoints:
@@ -121,6 +137,8 @@ management:
       exposure:
         include: "*"
     enabled-by-default: false
+
+
 
 
 #logging:
