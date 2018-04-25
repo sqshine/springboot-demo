@@ -13,9 +13,11 @@
     <properties resource="" url="" />
      -->
 
-    <!-- 在MBG工作的时候，需要额外加载的依赖包
-        location属性指明加载jar/zip包的全路径
-   <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />
+    <!--导入属性配置 -->
+    <!--<properties resource="generator.properties"></properties>-->
+
+    <!-- 在MBG工作的时候，需要额外加载的依赖包location属性指明加载jar/zip包的全路径
+   <classPathEntry location="/Users/sqshine/.m2/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar" />
      -->
 
     <!--
@@ -30,7 +32,7 @@
             2，MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
         introspectedColumnImpl：类全限定名，用于扩展MBG
     -->
-    <context id="mysql" defaultModelType="hierarchical" targetRuntime="MyBatis3Simple" >
+    <context id="mysql" defaultModelType="flat" targetRuntime="MyBatis3Simple" >
 
         <!-- 注意以下标签的顺序:property*,plugin*,commentGenerator?,jdbcConnection,
         javaTypeResolver?,javaModelGenerator,sqlMapGenerator?,
@@ -57,6 +59,7 @@
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="false"/>
+            <!--<property name="addRemarkComments" value="true"/>-->
             <!-- 不希望生成的注释中包含时间戳 -->
             <property name="suppressDate" value="true" />
             <!-- 是否  自动为每一个生成的类创建一个构造方法-->
@@ -141,7 +144,15 @@
         <javaClientGenerator targetPackage="com._520it.mybatis.mapper" type="ANNOTATEDMAPPER" targetProject="src/main/java">
             <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
             <property name="enableSubPackages" value="true"/>
-
+            <!--
+                                定义Maper.java 源代码中的ByExample() 方法的可视性，可选的值有：
+                                public;
+                                private;
+                                protected;
+                                default
+                                注意：如果 targetRuntime="MyBatis3",此参数被忽略
+                         -->
+            <!--<property name="exampleMethodVisibility" value=""/>-->
             <!-- 可以为所有生成的接口添加一个父接口，但是MBG只负责生成，不负责检查
             <property name="rootInterface" value=""/>
              -->
@@ -227,25 +238,27 @@
             <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
             <property name="useActualColumnNames" value="false"/>
 
+            <!-- optional   , only for mybatis3 runtime
+                 自动生成的键值（identity,或者序列值）
+               如果指定此元素，MBG将会生成<selectKey>元素，然后将此元素插入到SQL Map的<insert> 元素之中
+               sqlStatement 的语句将会返回新的值
+               如果是一个自增主键的话，你可以使用预定义的语句,或者添加自定义的SQL语句. 预定义的值如下:
+                  Cloudscape:相当于selectKey的SQL为： VALUES IDENTITY_VAL_LOCAL()
+                  DB2       :相当于selectKey的SQL为： VALUES IDENTITY_VAL_LOCAL()
+                  DB2_MF    :相当于selectKey的SQL为：SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1
+                  Derby      :相当于selectKey的SQL为：VALUES IDENTITY_VAL_LOCAL()
+                  HSQLDB      :相当于selectKey的SQL为：CALL IDENTITY()
+                  Informix  :相当于selectKey的SQL为：select dbinfo('sqlca.sqlerrd1') from systables where tabid=1
+                  MySql      :相当于selectKey的SQL为：SELECT LAST_INSERT_ID()
+                  SqlServer :相当于selectKey的SQL为：SELECT SCOPE_IDENTITY()
+                  SYBASE      :相当于selectKey的SQL为：SELECT @@IDENTITY
+                  JDBC      :相当于在生成的insert元素上添加useGeneratedKeys="true"和keyProperty属性
+                  identity: 自增主键  If true, then the column is flagged as an identity column and the generated <selectKey> element will be placed after the insert (for an identity column). If false, then the generated <selectKey> will be placed before the insert (typically for a sequence).
 
-            <!-- generatedKey用于生成生成主键的方法，
-                如果设置了该元素，MBG会在生成的<insert>元素中生成一条正确的<selectKey>元素，该元素可选
-                column:主键的列名；
-                sqlStatement：要生成的selectKey语句，有以下可选项：
-                    Cloudscape:相当于selectKey的SQL为： VALUES IDENTITY_VAL_LOCAL()
-                    DB2       :相当于selectKey的SQL为： VALUES IDENTITY_VAL_LOCAL()
-                    DB2_MF    :相当于selectKey的SQL为：SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1
-                    Derby      :相当于selectKey的SQL为：VALUES IDENTITY_VAL_LOCAL()
-                    HSQLDB      :相当于selectKey的SQL为：CALL IDENTITY()
-                    Informix  :相当于selectKey的SQL为：select dbinfo('sqlca.sqlerrd1') from systables where tabid=1
-                    MySql      :相当于selectKey的SQL为：SELECT LAST_INSERT_ID()
-                    SqlServer :相当于selectKey的SQL为：SELECT SCOPE_IDENTITY()
-                    SYBASE      :相当于selectKey的SQL为：SELECT @@IDENTITY
-                    JDBC      :相当于在生成的insert元素上添加useGeneratedKeys="true"和keyProperty属性
-            <generatedKey column="" sqlStatement=""/>
-             -->
+            -->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true" type=""/>-->
 
-            <!--
+            <!-- optional.
                 该元素会在根据表中列名计算对象属性名之前先重命名列名，非常适合用于表中的列都有公用的前缀字符串的时候，
                 比如列名为：CUST_ID,CUST_NAME,CUST_EMAIL,CUST_ADDRESS等；
                 那么就可以设置searchString为"^CUST_"，并使用空白替换，那么生成的Customer对象中的属性名称就不是
@@ -254,11 +267,15 @@
                 注意，MBG是使用java.util.regex.Matcher.replaceAll来替换searchString和replaceString的，
                 如果使用了columnOverride元素，该属性无效；
 
+                支持正在表达式
+                     searchString 表示要被换掉的字符串
+                     replaceString 则是要换成的字符串，默认情况下为空字符串，可选
+
             <columnRenamingRule searchString="" replaceString=""/>
              -->
 
 
-            <!-- 用来修改表中某个列的属性，MBG会使用修改后的列来生成domain的属性；
+            <!-- optional.用来修改表中某个列的属性，MBG会使用修改后的列来生成domain的属性；
                 column:要重新设置的列名；
                 注意，一个table元素中可以有多个columnOverride元素哈~
              -->
@@ -270,7 +287,7 @@
                 <property name="javaType" value=""/>
                  -->
 
-                <!-- jdbcType用于指定该列的JDBC类型
+                <!-- jdbcType该列的JDBC数据类型(INTEGER, DECIMAL, NUMERIC, VARCHAR, etc.)，该列可以覆盖由JavaTypeResolver计算得到的Jdbc类型，对某些数据库而言，对于处理特定的JDBC 驱动癖好 很有必要(e.g. DB2's LONGVARCHAR type should be mapped to VARCHAR for iBATIS).
                 <property name="jdbcType" value=""/>
                  -->
 
@@ -285,9 +302,10 @@
                  -->
             </columnOverride>
 
-            <!-- ignoreColumn设置一个MGB忽略的列，如果设置了改列，那么在生成的domain中，生成的SQL中，都不会有该列出现
+            <!-- optional.告诉 MBG 忽略某一列
+                ignoreColumn设置一个MGB忽略的列，如果设置了该列，那么在生成的domain中，生成的SQL中，都不会有该列出现
                 column:指定要忽略的列的名字；
-                delimitedColumnName：参考table元素的delimitAllColumns配置，默认为false
+                delimitedColumnName：true ,匹配column的值和数据库列的名称 大小写完全匹配，false 忽略大小写匹配是否限定表的列名，即固定表列在Model中的名称，默认为false
 
                 注意，一个table元素中可以有多个ignoreColumn元素
             <ignoreColumn column="deptId" delimitedColumnName=""/>

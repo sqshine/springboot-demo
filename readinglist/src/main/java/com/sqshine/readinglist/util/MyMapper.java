@@ -30,6 +30,7 @@ import tk.mybatis.mapper.common.MySqlMapper;
 
 /**
  * 继承自己的MyMapper
+ * Spring Boot 集成 MyBatis, 分页插件 PageHelper, 通用 Mapper，参考https://github.com/abel533/MyBatis-Spring-Boot
  * 特别注意，该接口不能被扫描到，否则会出错
  * @author sqshine
  */

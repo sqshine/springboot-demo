@@ -7,6 +7,7 @@
 <generatorConfiguration>
     <classPathEntry location="/Users/sqshine/.m2/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar"/>
     <context id="MysqlContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
 
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
