@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * @author sqshine
  */
-public class XssFilter implements Filter {
+class XssFilter implements Filter {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(XssFilter.class);
 

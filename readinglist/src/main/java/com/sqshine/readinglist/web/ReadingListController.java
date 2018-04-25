@@ -31,6 +31,7 @@ public class ReadingListController {
         return readingListRepository.findAll();
     }
 
+    @SuppressWarnings("SameReturnValue")
     @GetMapping("/{reader}")
     public String readersBooks(@PathVariable("reader") String reader, Model model) {
 
@@ -42,6 +43,7 @@ public class ReadingListController {
         return "readingList";
     }
 
+    @SuppressWarnings("SameReturnValue")
     @PostMapping(value = "/{reader}")
     public String addToReadingList(@PathVariable("reader") String reader, Book book) {
         book.setReader(reader);

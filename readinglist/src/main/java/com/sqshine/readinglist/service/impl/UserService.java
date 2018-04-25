@@ -21,10 +21,10 @@ import java.util.List;
 public class UserService implements IUserService {
 
     @Autowired
-    private SysUserMapper userMapper;
+    private SysUserMapper sysUserMapper;
 
     @Autowired
-    private SysUserMapperCustom userMapperCustom;
+    private SysUserMapperCustom sysUserMapperCustom;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
@@ -36,20 +36,20 @@ public class UserService implements IUserService {
             e.printStackTrace();
         }
 
-        userMapper.insert(user);
+        sysUserMapper.insert(user);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateUser(SysUser user) {
-//		userMapper.updateByPrimaryKeySelective(user);
-        userMapper.updateByPrimaryKey(user);
+//		sysUserMapper.updateByPrimaryKeySelective(user);
+        sysUserMapper.updateByPrimaryKey(user);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteUser(String userId) {
-        userMapper.deleteByPrimaryKey(userId);
+        sysUserMapper.deleteByPrimaryKey(userId);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class UserService implements IUserService {
             e.printStackTrace();
         }
 
-        return userMapper.selectByPrimaryKey(userId);
+        return sysUserMapper.selectByPrimaryKey(userId);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class UserService implements IUserService {
             criteria.andLike("nickname", "%" + user.getNickname() + "%");
         }
 
-        return userMapper.selectByExample(example);
+        return sysUserMapper.selectByExample(example);
     }
 
     @Override
@@ -103,14 +103,14 @@ public class UserService implements IUserService {
         }
         example.orderBy("registTime").desc();
 
-        return userMapper.selectByExample(example);
+        return sysUserMapper.selectByExample(example);
     }
 
     @Override
     @Transactional
     public SysUser queryUserByIdCustom(String userId) {
 
-        List<SysUser> userList = userMapperCustom.queryUserSimplyInfoById(userId);
+        List<SysUser> userList = sysUserMapperCustom.queryUserSimplyInfoById(userId);
 
         if (userList != null && !userList.isEmpty()) {
             return userList.get(0);
@@ -123,9 +123,9 @@ public class UserService implements IUserService {
     @Transactional(rollbackFor = Exception.class)
     public void saveUserTransactional(SysUser user) {
 
-        userMapper.insert(user);
+        sysUserMapper.insert(user);
 
         user.setIsDelete(1);
-        userMapper.updateByPrimaryKeySelective(user);
+        sysUserMapper.updateByPrimaryKeySelective(user);
     }
 }

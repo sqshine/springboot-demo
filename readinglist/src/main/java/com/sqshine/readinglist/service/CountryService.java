@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public class CountryService implements ICountryService {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private CountryMapper countryMapper;
 
@@ -29,8 +30,8 @@ public class CountryService implements ICountryService {
 
     @Override
     @Transactional
-    public Integer save(Country country) {
-        return countryMapper.save(country);
+    public void save(Country country) {
+        countryMapper.save(country);
     }
 
 }

@@ -12,7 +12,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 /**
  * @author sqshine
@@ -23,6 +22,7 @@ import javax.validation.Valid;
 public class Home {
     private static final Logger logger = LoggerFactory.getLogger(Home.class);
 
+    @SuppressWarnings("SameReturnValue")
     @GetMapping("/")
     public String index(Post post) {
         post.setTitle("Index-首页");

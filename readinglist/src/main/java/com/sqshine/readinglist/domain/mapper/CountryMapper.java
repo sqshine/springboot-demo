@@ -16,7 +16,7 @@ public interface CountryMapper {
     Country getById(@Param("id") int id);
 
     @Insert("insert into country(countryname,countrycode) values(#{countryname},#{countrycode})")
-    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "Id")//返回自动生成的主键
-    Integer save(Country country);
+    @Options(useGeneratedKeys = true, keyColumn = "Id")//返回自动生成的主键
+    void save(Country country);
 
 }

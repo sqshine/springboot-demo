@@ -5,7 +5,7 @@ import com.sqshine.readinglist.enums.ResultEnum;
 /**
  * @author sqshine
  */
-public class BusinessException extends RuntimeException {
+class BusinessException extends RuntimeException {
 
     private Integer code;
 
