@@ -3,6 +3,11 @@ spring:
   profiles:
     active: dev
 
+---
+
+spring:
+  profiles: dev
+
 #cache: false  #开发者工具dev-tools激活后，如下属性会设置为false。
 # spring.thymeleaf.cache
 # spring.freemarker.cache
@@ -104,11 +109,20 @@ spring:
 #      max-idle: 8
 
 server:
-  port: 8000
+  port: 8080
   servlet:
     session:
       cookie:
         http-only: true
+
+# 日志使用自定义的logback-spring.xml文件后，application.properties中关于日志的相关配置一些硬性的配置，例如生成日志文件等不会被影响，但是如果随意配置的话，会影响到自定义日志配置文件中的配置。
+# 所以，配置了自定义的日志配置文件logback-spring.xml之后，就不用在application.properties进行配置了，不然多此一举，产生不必要的影响。
+#logging:
+#  level:
+#    root: debug
+#    com.sqshine: DEBUG
+#    com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。
+#  file: logs/spring_boot_test.log
 
 mybatis:
   type-aliases-package: com.sqshine.readinglist.domain.model
@@ -137,16 +151,5 @@ management:
       exposure:
         include: "*"
     enabled-by-default: false
-
-
-
-
-#logging:
-#  path: D:/
-#  file: D:/spring_boot_test.log
-#  level:
-#    com.sqshine: DEBUG
-#    com.sqshine.readinglist.domain.mapper: TRACE   # 输出mybatis的sql语句。
-
 
 #DevTools
