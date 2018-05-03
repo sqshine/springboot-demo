@@ -45,7 +45,7 @@ public abstract class AbstractService<T> implements IService<T> {
 
     @Override
     public void deleteByIds(String ids) {
-        //mapper.deleteByIds(ids);
+        mapper.deleteByIds(ids);
     }
 
     @Override

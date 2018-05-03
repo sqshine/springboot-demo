@@ -88,7 +88,7 @@ public class SysUserContoller {
             page = 1;
         }
 
-        int pageSize = 10;
+        int pageSize = 2;
 
         SysUser user = new SysUser();
 //		user.setNickname("lee");

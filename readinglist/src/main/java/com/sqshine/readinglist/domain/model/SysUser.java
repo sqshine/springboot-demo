@@ -32,7 +32,7 @@ public class SysUser {
      * 性别
 0：女
 1：男
-2：保密
+2：保密 
      */
     private Integer sex;
 
@@ -110,7 +110,7 @@ public class SysUser {
     }
 
     /**
-     * @param id id
+     * @param id
      */
     public void setId(String id) {
         this.id = id;
@@ -192,12 +192,12 @@ public class SysUser {
      * 获取性别
 0：女
 1：男
-2：保密
+2：保密 
      *
      * @return sex - 性别
 0：女
 1：男
-2：保密
+2：保密 
      */
     public Integer getSex() {
         return sex;
@@ -207,12 +207,12 @@ public class SysUser {
      * 设置性别
 0：女
 1：男
-2：保密
+2：保密 
      *
      * @param sex 性别
 0：女
 1：男
-2：保密
+2：保密 
      */
     public void setSex(Integer sex) {
         this.sex = sex;
@@ -432,7 +432,7 @@ public class SysUser {
     }
 
     /**
-     * @param isDelete dd
+     * @param isDelete
      */
     public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
@@ -446,7 +446,7 @@ public class SysUser {
     }
 
     /**
-     * @param registTime tt
+     * @param registTime
      */
     public void setRegistTime(Date registTime) {
         this.registTime = registTime;

@@ -126,7 +126,7 @@
                     <dependency>
                         <groupId>tk.mybatis</groupId>
                         <artifactId>mapper</artifactId>
-                        <version>4.0.2</version>
+                        <version>4.0.3-beta1</version>
                     </dependency>
                     <dependency>
                         <groupId>mysql</groupId>

@@ -5,11 +5,11 @@ import com.sqshine.readinglist.domain.mapper.SysUserMapper;
 import com.sqshine.readinglist.domain.mapper.SysUserMapperCustom;
 import com.sqshine.readinglist.domain.model.SysUser;
 import com.sqshine.readinglist.service.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
@@ -30,12 +30,6 @@ public class UserService implements IUserService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void saveUser(SysUser user) {
 
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         sysUserMapper.insert(user);
     }
 
@@ -55,12 +49,6 @@ public class UserService implements IUserService {
     @Override
     public SysUser queryUserById(String userId) {
 
-        try {
-            Thread.sleep(6000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         return sysUserMapper.selectByPrimaryKey(userId);
     }
 
@@ -68,22 +56,17 @@ public class UserService implements IUserService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<SysUser> queryUserList(SysUser user) {
 
-        try {
-            Thread.sleep(11000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         Example example = new Example(SysUser.class);
         Example.Criteria criteria = example.createCriteria();
 
-        if (!StringUtils.isEmptyOrWhitespace(user.getUsername())) {
+        if (StringUtils.isNotBlank(user.getUsername())) {
 //			criteria.andEqualTo("username", user.getUsername());
             criteria.andLike("username", "%" + user.getUsername() + "%");
         }
 
-        if (!StringUtils.isEmptyOrWhitespace(user.getNickname())) {
-            criteria.andLike("nickname", "%" + user.getNickname() + "%");
+        if (StringUtils.isNotBlank(user.getNickname())) {
+            criteria.orLike("nickname", "%" + user.getNickname() + "%");
         }
 
         return sysUserMapper.selectByExample(example);
@@ -98,7 +81,7 @@ public class UserService implements IUserService {
         Example example = new Example(SysUser.class);
         Example.Criteria criteria = example.createCriteria();
 
-        if (!StringUtils.isEmptyOrWhitespace(user.getNickname())) {
+        if (StringUtils.isNotBlank(user.getNickname())) {
             criteria.andLike("nickname", "%" + user.getNickname() + "%");
         }
         example.orderBy("registTime").desc();
