@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class WebMvcConfig {
 
     /**
      * FastJson替代Jackson
+     *
      * @return HttpMessageConverters
      */
     @Bean
@@ -56,13 +58,14 @@ public class WebMvcConfig {
 
         //2、添加fastJson 的配置信息，比如：是否要格式化返回的json数据;
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteNullStringAsEmpty);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteNullStringAsEmpty, SerializerFeature.WriteNullNumberAsZero);
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
 
         //2-1 处理中文乱码问题
         List<MediaType> fastMediaTypes = new ArrayList<>();
         fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
         fastConverter.setSupportedMediaTypes(fastMediaTypes);
+        //fastConverter.setDefaultCharset(Charset.forName("UTF-8"));
 
         //3、在convert中添加配置信息.
         fastConverter.setFastJsonConfig(fastJsonConfig);
