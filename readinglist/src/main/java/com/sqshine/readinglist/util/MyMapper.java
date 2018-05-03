@@ -25,16 +25,34 @@
 package com.sqshine.readinglist.util;
 
 
-import tk.mybatis.mapper.common.Mapper;
-import tk.mybatis.mapper.common.MySqlMapper;
+import tk.mybatis.mapper.common.*;
+import tk.mybatis.mapper.common.special.InsertListMapper;
 
 /**
  * 继承自己的MyMapper
  * Spring Boot 集成 MyBatis, 分页插件 PageHelper, 通用 Mapper，参考https://github.com/abel533/MyBatis-Spring-Boot
  * 特别注意，该接口不能被扫描到，否则会出错
+ *
  * @author sqshine
  */
-public interface MyMapper<T> extends Mapper<T>, MySqlMapper<T> {
+public interface MyMapper<T>
+        extends Mapper<T>,
+        MySqlMapper<T>,
+        BaseMapper<T>,
+        ConditionMapper<T>,
+        IdsMapper<T>,
+        InsertListMapper<T> {
 
     // 特别注意，该接口不能被扫描到，否则会出错
 }
+
+/*public interface MyMapper<T>
+        extends Mapper<T>,
+        MySqlMapper<T>,
+        BaseMapper<T>,
+        ConditionMapper<T>,
+        IdsMapper<T>,
+        InsertListMapper<T> {
+
+    // 特别注意，该接口不能被扫描到，否则会出错
+}*/

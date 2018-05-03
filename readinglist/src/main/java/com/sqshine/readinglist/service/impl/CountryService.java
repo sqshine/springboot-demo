@@ -1,8 +1,9 @@
-package com.sqshine.readinglist.service;
+package com.sqshine.readinglist.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.sqshine.readinglist.domain.mapper.CountryMapper;
 import com.sqshine.readinglist.domain.model.Country;
+import com.sqshine.readinglist.service.ICountryService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author sqshine
+ */
 @Service
 public class CountryService implements ICountryService {
 
