@@ -158,7 +158,7 @@ INSERT INTO `sys_role_permission` VALUES ('11', '6', '255');
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
-  `id` varchar(20) NOT NULL,
+  `id` bigint NOT NULL,
   `username` varchar(60) NOT NULL COMMENT '用户名，登录名',
   `password` varchar(64) NOT NULL COMMENT '密码',
   `nickname` varchar(60) NOT NULL COMMENT '昵称',
@@ -183,11 +183,11 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1001', 'test', '72e1242b855fb038212135e0ad348842', 'lee123', null, null, null, null, null, null, null, null, 'test', null, null, '0', '2017-11-06 10:20:36');
-INSERT INTO `sys_user` VALUES ('1709067GM45GAF5P', 'jack', 'afee05e30d029ac3b61a2dc6c08d7b27', 'jack', '22', '0', '3', null, '上海市', '上海市市辖区', '静安区', '上海老薛', 'abcd', null, null, '0', '2017-09-06 10:35:28');
-INSERT INTO `sys_user` VALUES ('170908G65M59XWH0', 'test003', 'afee05e30d029ac3b61a2dc6c08d7b27', 'test003', '20', '0', '3', null, '上海市', '上海市市辖区', '黄浦区', '老薛家', 'tx5D', null, null, '1', '2017-09-08 21:19:40');
-INSERT INTO `sys_user` VALUES ('170918GDXW2DNP4H', 'test001', 'afee05e30d029ac3b61a2dc6c08d7b27', 'test0016', '18', '1', '9', null, '湖北省', '鄂州市', '华容区', '123', 'W5k4', null, null, '0', '2017-09-18 21:42:51');
-INSERT INTO `sys_user` VALUES ('171020FWN55RS5AW', 'test1001', '75a5298456daeb532320fdd4a9eacec0', 'test1001', null, null, null, null, null, null, null, null, '3883', null, null, '0', '2017-10-20 20:51:05');
-INSERT INTO `sys_user` VALUES ('1803269654BP2428', 'imoocMon Mar 26 12:55:11 CST 2018', 'abc123', 'imoocMon Mar 26 12:55:11 CST 2018', null, null, null, null, null, null, null, null, null, null, null, '0', '2018-03-26 12:55:11');
+INSERT INTO `sys_user` VALUES ('1002', 'jack', 'afee05e30d029ac3b61a2dc6c08d7b27', 'jack', '22', '0', '3', null, '上海市', '上海市市辖区', '静安区', '上海老薛', 'abcd', null, null, '0', '2017-09-06 10:35:28');
+INSERT INTO `sys_user` VALUES ('1003', 'test003', 'afee05e30d029ac3b61a2dc6c08d7b27', 'test003', '20', '0', '3', null, '上海市', '上海市市辖区', '黄浦区', '老薛家', 'tx5D', null, null, '1', '2017-09-08 21:19:40');
+INSERT INTO `sys_user` VALUES ('1006', 'test001', 'afee05e30d029ac3b61a2dc6c08d7b27', 'test0016', '18', '1', '9', null, '湖北省', '鄂州市', '华容区', '123', 'W5k4', null, null, '0', '2017-09-18 21:42:51');
+INSERT INTO `sys_user` VALUES ('1007', 'test1001', '75a5298456daeb532320fdd4a9eacec0', 'test1001', null, null, null, null, null, null, null, null, '3883', null, null, '0', '2017-10-20 20:51:05');
+INSERT INTO `sys_user` VALUES ('1008', 'test Mar 26 12:55:11 CST 2018', 'abc123', 'testsss Mar 26 12:55:11 CST 2018', null, null, null, null, null, null, null, null, null, null, null, '0', '2018-03-26 12:55:11');
 
 -- ----------------------------
 -- Table structure for sys_user_role

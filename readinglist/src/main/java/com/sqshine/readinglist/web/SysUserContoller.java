@@ -36,8 +36,8 @@ public class SysUserContoller {
 
         SysUser user = new SysUser();
         user.setId(userId);
-        user.setUsername("imooc" + new Date());
-        user.setNickname("imooc" + new Date());
+        user.setUsername("test" + new Date());
+        user.setNickname("test" + new Date());
         user.setPassword("abc123");
         user.setIsDelete(0);
         user.setRegistTime(new Date());
@@ -91,7 +91,7 @@ public class SysUserContoller {
     public List<SysUser> queryUserList() {
 
         SysUser user = new SysUser();
-        user.setUsername("imooc");
+        user.setUsername("test");
         user.setNickname("lee");
 
         return userService.queryUserList(user);
