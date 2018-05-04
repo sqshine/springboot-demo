@@ -64,11 +64,13 @@ public class SysUserContoller {
 
     @RequestMapping("/delete")
     public Result deleteUser(Long userId) {
-
-        logger.info("userid=======>{}",userId);
-
         userService.deleteById(userId);
+        return ResultUtil.success("delete OK");
+    }
 
+    @RequestMapping("/d")
+    public Result deleteUsers() {
+        userService.deleteByIds("10,1005");
         return ResultUtil.success("delete OK");
     }
 
