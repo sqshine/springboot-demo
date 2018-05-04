@@ -1,9 +1,11 @@
 package com.sqshine.readinglist.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sqshine.readinglist.domain.mapper.SysUserMapper;
 import com.sqshine.readinglist.domain.mapper.SysUserMapperCustom;
 import com.sqshine.readinglist.domain.model.SysUser;
+import com.sqshine.readinglist.service.AbstractService;
 import com.sqshine.readinglist.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,39 +20,13 @@ import java.util.List;
  * @author sqshine
  */
 @Service
-public class UserService implements IUserService {
+public class UserService extends AbstractService<SysUser,Long> implements IUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
 
     @Autowired
     private SysUserMapperCustom sysUserMapperCustom;
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void saveUser(SysUser user) {
-
-        sysUserMapper.insert(user);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void updateUser(SysUser user) {
-//		sysUserMapper.updateByPrimaryKeySelective(user);
-        sysUserMapper.updateByPrimaryKey(user);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteUser(String userId) {
-        sysUserMapper.deleteByPrimaryKey(userId);
-    }
-
-    @Override
-    public SysUser queryUserById(String userId) {
-
-        return sysUserMapper.selectByPrimaryKey(userId);
-    }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -74,7 +50,7 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<SysUser> queryUserListPaged(SysUser user, Integer page, Integer pageSize) {
+    public PageInfo<SysUser> queryUserListPaged(SysUser user, Integer page, Integer pageSize) {
         // 开始分页
         PageHelper.startPage(page, pageSize);
 
@@ -85,12 +61,11 @@ public class UserService implements IUserService {
             criteria.andLike("nickname", "%" + user.getNickname() + "%");
         }
         example.orderBy("registTime").desc();
-
-        return sysUserMapper.selectByExample(example);
+        List<SysUser> userList = sysUserMapper.selectByExample(example);
+        return new PageInfo<>(userList);
     }
 
     @Override
-    @Transactional
     public SysUser queryUserByIdCustom(String userId) {
 
         List<SysUser> userList = sysUserMapperCustom.queryUserSimplyInfoById(userId);
@@ -107,7 +82,7 @@ public class UserService implements IUserService {
     public void saveUserTransactional(SysUser user) {
 
         sysUserMapper.insert(user);
-
+        //int a = 1 / 0;
         user.setIsDelete(1);
         sysUserMapper.updateByPrimaryKeySelective(user);
     }
