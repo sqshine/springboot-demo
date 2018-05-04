@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -56,7 +55,6 @@ public class CountryController {
      * 直接返回String，配置使用fastjson时，需要加上produces = MediaType.APPLICATION_JSON_UTF8_VALUE，不会出现乱码
      * @return String
      */
-    //@GetMapping(value = "t",produces = "application/json; charset=UTF-8")
     @GetMapping(value = "t",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getT(){
         return "中文擦黑";

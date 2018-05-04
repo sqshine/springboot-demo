@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.sqshine.readinglist.domain.model.Result;
 import com.sqshine.readinglist.domain.model.SysUser;
 import com.sqshine.readinglist.service.IUserService;
+import com.sqshine.readinglist.util.DateUtil;
 import com.sqshine.readinglist.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.expression.Ids;
 
 import java.util.Date;
 import java.util.List;
@@ -36,8 +36,8 @@ public class SysUserContoller {
 
         SysUser user = new SysUser();
         user.setId(userId);
-        user.setUsername("test" + new Date());
-        user.setNickname("test" + new Date());
+        user.setUsername("test" + DateUtil.getTime());
+        user.setNickname("test" + DateUtil.getTime());
         user.setPassword("abc123");
         user.setIsDelete(0);
         user.setRegistTime(new Date());
@@ -52,8 +52,8 @@ public class SysUserContoller {
 
         SysUser user = new SysUser();
         user.setId("1001");
-        user.setUsername("10011001-updated" + new Date());
-        user.setNickname("10011001-updated" + new Date());
+        user.setUsername("10011001-updated" + DateUtil.getTime());
+        user.setNickname("10011001-updated" + DateUtil.getTime());
         user.setPassword("10011001-updated");
         user.setIsDelete(0);
         user.setRegistTime(new Date());
@@ -124,8 +124,8 @@ public class SysUserContoller {
         String userId = "101";
         SysUser user = new SysUser();
         user.setId(userId);
-        user.setUsername("sq" + new Date());
-        user.setNickname("sq" + new Date());
+        user.setUsername("sq" + DateUtil.getTime());
+        user.setNickname("sq" + DateUtil.getTime());
         user.setPassword("abc123");
         user.setIsDelete(0);
         user.setRegistTime(new Date());
