@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.expression.Ids;
 
 import java.util.Date;
 import java.util.List;
@@ -68,7 +69,7 @@ public class SysUserContoller {
         return ResultUtil.success("delete OK");
     }
 
-    @RequestMapping("/d")
+    @RequestMapping("/ds")
     public Result deleteUsers() {
         userService.deleteByIds("10,1005");
         return ResultUtil.success("delete OK");
@@ -78,6 +79,12 @@ public class SysUserContoller {
     public SysUser getUserById(@PathVariable Long userId) {
 
         return userService.findById(userId);
+    }
+
+    @RequestMapping("/getUsersByIds")
+    public List<SysUser> getUsersByIds(String ids) {
+
+        return userService.findByIds(ids);
     }
 
     @RequestMapping("/queryUserList")
