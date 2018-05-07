@@ -15,16 +15,16 @@ public interface IService<T,ID extends Serializable> {
     /**
      * 持久化
      *
-     * @param model 实体
+     * @param entity 实体
      */
-    void save(T model);
+    void save(T entity);
 
     /**
      * 批量持久化
      *
-     * @param models 实体列表
+     * @param entities 实体列表
      */
-    void save(List<T> models);
+    void saveAll(List<T> entities);
 
     /**
      * 通过主鍵刪除
@@ -43,9 +43,9 @@ public interface IService<T,ID extends Serializable> {
     /**
      * 更新
      *
-     * @param model 实体
+     * @param entity 实体
      */
-    void update(T model);
+    void update(T entity);
 
     /**
      * 通过ID查找
@@ -81,29 +81,29 @@ public interface IService<T,ID extends Serializable> {
     /**
      * 根据条件查询一条数据，如果有多条数据会抛出异常
      *
-     * @param model 实体
+     * @param entity 实体
      * @return 实体
      */
-    T queryOne(T model);
+    T getOne(T entity);
 
 
     /**
      * 根据条件查询数据列表
      *
-     * @param model 实体
+     * @param entity 实体
      * @return 列表
      */
-    List<T> queryListByWhere(T model);
+    List<T> findAll(T entity);
 
     /**
      * 分页查询
      *
      * @param page  page
      * @param rows  rows
-     * @param model model
+     * @param entity entity
      * @return PageInfo
      */
-    PageInfo<T> queryPageListByWhere(Integer page, Integer rows, T model);
+    PageInfo<T> findAll(Integer page, Integer rows, T entity);
 
 
 }

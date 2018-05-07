@@ -21,26 +21,26 @@ public abstract class AbstractService<T, ID extends Serializable> implements ISe
     /**
      * 当前泛型真实类型的Class
      */
-    //private Class<T> modelClass;
+    //private Class<T> entityClass;
 
     @Autowired
     protected MyMapper<T> mapper;
 
-   /*public AbstractService() {
+  /* public AbstractService() {
         ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
-        modelClass = (Class<T>) pt.getActualTypeArguments()[0];
+        entityClass = (Class<T>) pt.getActualTypeArguments()[0];
     }*/
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void save(T model) {
-        mapper.insertSelective(model);
+    public void save(T entity) {
+        mapper.insertSelective(entity);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void save(List<T> models) {
-        mapper.insertList(models);
+    public void saveAll(List<T> entities) {
+        mapper.insertList(entities);
     }
 
     @Override
@@ -57,8 +57,8 @@ public abstract class AbstractService<T, ID extends Serializable> implements ISe
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void update(T model) {
-        mapper.updateByPrimaryKeySelective(model);
+    public void update(T entity) {
+        mapper.updateByPrimaryKeySelective(entity);
     }
 
     @Override
@@ -66,14 +66,14 @@ public abstract class AbstractService<T, ID extends Serializable> implements ISe
         return mapper.selectByPrimaryKey(id);
     }
 
-/*    @Override
+   /* @Override
     public T findBy(String fieldName, Object value) throws TooManyResultsException, IllegalAccessException, NoSuchFieldException, InstantiationException {
 
-            T model = modelClass.newInstance();
-            Field field = modelClass.getDeclaredField(fieldName);
+            T entity = entityClass.newInstance();
+            Field field = entityClass.getDeclaredField(fieldName);
             field.setAccessible(true);
-            field.set(model, value);
-            return mapper.selectOne(model);
+            field.set(entity, value);
+            return mapper.selectOne(entity);
 
     }*/
 
@@ -93,19 +93,19 @@ public abstract class AbstractService<T, ID extends Serializable> implements ISe
     }
 
     @Override
-    public T queryOne(T model) {
-        return mapper.selectOne(model);
+    public T getOne(T entity) {
+        return mapper.selectOne(entity);
     }
 
     @Override
-    public List<T> queryListByWhere(T model) {
-        return mapper.select(model);
+    public List<T> findAll(T entity) {
+        return mapper.select(entity);
     }
 
     @Override
-    public PageInfo<T> queryPageListByWhere(Integer page, Integer rows, T model) {
+    public PageInfo<T> findAll(Integer page, Integer rows, T entity) {
         PageHelper.startPage(page, rows);
-        List<T> list = this.queryListByWhere(model);
+        List<T> list = this.findAll(entity);
         return new PageInfo<>(list);
     }
 }
