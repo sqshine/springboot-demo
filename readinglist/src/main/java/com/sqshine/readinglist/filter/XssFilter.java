@@ -9,28 +9,25 @@ import java.io.IOException;
 /**
  * @author sqshine
  */
-class XssFilter implements Filter {
+public class XssFilter implements Filter {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(XssFilter.class);
 
+    private FilterConfig filterConfig = null;
 
     @Override
     public void init(FilterConfig filterConfig) {
-
+        this.filterConfig = filterConfig;
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        chain.doFilter(new XssHttpServletRequestWraper((HttpServletRequest) request), response);
         logger.debug("==>XssFilter拦截请求");
-        if (request instanceof HttpServletRequest) {
-            chain.doFilter(new XssHttpServletRequestWraper((HttpServletRequest) request), response);
-        } else {
-            chain.doFilter(request, response);
-        }
     }
 
     @Override
     public void destroy() {
-
+        this.filterConfig = null;
     }
 }

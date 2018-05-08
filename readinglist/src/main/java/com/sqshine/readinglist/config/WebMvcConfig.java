@@ -6,6 +6,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sqshine.readinglist.domain.model.Result;
 import com.sqshine.readinglist.enums.ResultEnum;
+import com.sqshine.readinglist.filter.XssFilter;
 import com.sqshine.readinglist.interceptors.LogInterceptor;
 import com.sqshine.readinglist.util.ResultUtil;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -124,19 +126,30 @@ public class WebMvcConfig {
         return new HttpMessageConverters((HttpMessageConverter<?>) fastConverter);
     }
 
+
+
     /*@SuppressWarnings("unchecked")
     @Bean
     public FilterRegistrationBean getXssFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+        FilterRegistrationBean registration = new FilterRegistrationBean(new XssFilter());
         //在一个filter注册时，如果没指定 DispatcherType ，它将匹配 FORWARD ， INCLUDE 和 REQUEST 。如果启用异步，它也将匹配 ASYNC 。如果迁移 web.xml 中没有 dispatcher 元素的filter，你需要自己指定一个 DispatcherType
         registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.setFilter(new XssFilter());
         registration.addUrlPatterns("/*");
         registration.setName("XssFilter");
         //registration.setOrder(1);
         return registration;
     }*/
 
+    /**
+     * xssFilter注册
+     */
+    @SuppressWarnings("unchecked")
+    @Bean
+    public FilterRegistrationBean xssFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean(new XssFilter());
+        registration.addUrlPatterns("/*");
+        return registration;
+    }
 
     private void responseResult(HttpServletResponse response, Result result) {
         response.setCharacterEncoding("UTF-8");

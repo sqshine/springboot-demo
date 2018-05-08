@@ -195,7 +195,7 @@ INSERT INTO `sys_user` VALUES ('1008', 'test Mar 26 12:55:11 CST 2018', 'abc123'
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
-  `sys_user_id` varchar(20) NOT NULL,
+  `sys_user_id` bigint NOT NULL,
   `sys_role_id` int(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
@@ -203,7 +203,7 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('21', '1709067GM45GAF5P', '1');
+INSERT INTO `sys_user_role` VALUES ('21', '1006', '1');
 
 -- ----------------------------
 -- Table structure for t_test
