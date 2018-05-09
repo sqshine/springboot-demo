@@ -84,7 +84,7 @@ public class WebMvcConfig {
                                 logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
                                         request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
 
-                                Result result = ResultUtil.error(ResultEnum.UNAUTHORIZED.getCode(), ResultEnum.UNAUTHORIZED.getMessage());
+                                Result result = ResultUtil.error(ResultEnum.UNAUTHORIZED);
 
                                 responseResult(response, result);
                                 return false;

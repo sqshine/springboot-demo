@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
     public Result defaultErrorHandler(Exception ex) {
         logger.error("error log :", ex);
         //return BusinessErrorRes.create(BusinessExceptionCode.SYSTEM_ERROR, BusinessExceptionCode.getMessage(BusinessExceptionCode.SYSTEM_ERROR));
-        return ResultUtil.error(ResultEnum.UNKONW_ERROR.getCode(), ResultEnum.UNKONW_ERROR.getMessage());
+        return ResultUtil.error(ResultEnum.UNKONW_ERROR);
     }
 
     /**
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(code = HttpStatus.CONFLICT)
     public Result handleBusinessException(BusinessException ex) {
         logger.info("【业务异常】- {}:{}", ex.getCode(), ex.getMessage());
-        return ResultUtil.error(ex.getCode(), ex.getMessage());
+        return ResultUtil.error(ex.getResultEnum());
     }
 
     /**
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public Result handleBindException(Exception ex) {
         logger.info("参数Exception:{}", ex);
-        return ResultUtil.error(ResultEnum.PARAM_INVALID.getCode(), ResultEnum.PARAM_INVALID.getMessage());
+        return ResultUtil.error(ResultEnum.PARAM_INVALID);
     }
 
     /**
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
             invalidArgument.setRejectedValue(error.getRejectedValue());
             invalidArguments.add(invalidArgument);
         }
-        return ResultUtil.error(ResultEnum.PARAM_INVALID.getCode(), ResultEnum.PARAM_INVALID.getMessage(), invalidArguments);
+        return ResultUtil.error(ResultEnum.PARAM_INVALID, invalidArguments);
     }
 
     /**
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public Result handleMultipartException(MultipartException ex) {
         logger.info("MultipartException:{}", ex.getMessage());
-        return ResultUtil.error(ResultEnum.FILE_SIZE_LARGE.getCode(), ResultEnum.FILE_SIZE_LARGE.getMessage());
+        return ResultUtil.error(ResultEnum.FILE_SIZE_LARGE);
     }
 
     /**
