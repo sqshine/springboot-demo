@@ -9,9 +9,7 @@ import com.sqshine.readinglist.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -29,13 +27,13 @@ public class SysUserContoller {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping("/save")
-    public Result saveUser() {
+    @PostMapping("/save")
+    public Result saveUser(@RequestBody SysUser user) {
 
-        String userId = "1010";
-
-        SysUser user = new SysUser();
-        user.setId(userId);
+        // String userId = "1010";
+        //
+        // SysUser user = new SysUser();
+        user.setId(user.getId());
         user.setUsername("test" + DateUtil.getTime());
         user.setNickname("test" + DateUtil.getTime());
         user.setPassword("abc123");
@@ -47,7 +45,7 @@ public class SysUserContoller {
         return ResultUtil.success("Save OK");
     }
 
-    @RequestMapping("/update")
+    @PutMapping("/update")
     public Result updateUser() {
 
         SysUser user = new SysUser();
@@ -63,31 +61,31 @@ public class SysUserContoller {
         return ResultUtil.success("update OK");
     }
 
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     public Result deleteUser(Long userId) {
         userService.deleteById(userId);
         return ResultUtil.success("delete OK");
     }
 
-    @RequestMapping("/ds")
+    @DeleteMapping("/ds")
     public Result deleteUsers() {
         userService.deleteByIds("10,1005");
         return ResultUtil.success("delete OK");
     }
 
-    @RequestMapping("/{userId}")
+    @GetMapping("/{userId}")
     public SysUser getUserById(@PathVariable Long userId) {
 
         return userService.findById(userId);
     }
 
-    @RequestMapping("/getUsersByIds")
+    @GetMapping("/getUsersByIds")
     public List<SysUser> getUsersByIds(String ids) {
 
         return userService.findByIds(ids);
     }
 
-    @RequestMapping("/queryUserList")
+    @GetMapping("/queryUserList")
     public List<SysUser> queryUserList() {
 
         SysUser user = new SysUser();
@@ -97,7 +95,7 @@ public class SysUserContoller {
         return userService.queryUserList(user);
     }
 
-    @RequestMapping("/queryUserListPaged")
+    @GetMapping("/queryUserListPaged")
     public PageInfo<SysUser> queryUserListPaged(Integer page) {
 
         if (page == null) {
@@ -112,13 +110,13 @@ public class SysUserContoller {
         return userService.queryUserListPaged(user, page, pageSize);
     }
 
-    @RequestMapping("/queryUserByIdCustom")
+    @GetMapping("/queryUserByIdCustom")
     public SysUser queryUserByIdCustom(String userId) {
 
         return userService.queryUserByIdCustom(userId);
     }
 
-    @RequestMapping("/saveUserTransactional")
+    @GetMapping("/saveUserTransactional")
     public Result saveUserTransactional() {
 
         String userId = "101";
