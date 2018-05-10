@@ -30,8 +30,8 @@ public class HelloController {
     private DemoMethodService demoMethodService;
     @Autowired
     private AsyncTaskService asyncTaskService;
-    @Autowired
-    private AuthorSettings authorSettings;
+/*    @Autowired
+    private AuthorSettings authorSettings;*/
 
     @Value("${book.author}")
     private String bookAuthor;
@@ -63,7 +63,8 @@ public class HelloController {
         logger.info("注入内容：{}", word);
         logger.info("书名：{},作者：{}", bookName, bookAuthor);
 
-        logger.info("作者：{},性别：{}", authorSettings.getName(), authorSettings.getGender());
+        // logger.info("作者：{},性别：{}", authorSettings.getName(), authorSettings.getGender());
+        logger.info("作者：{},性别：{}", AuthorSettings.me().getName(), AuthorSettings.me().getGender());
         return word;
     }
 
