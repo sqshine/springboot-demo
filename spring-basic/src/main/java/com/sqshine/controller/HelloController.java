@@ -1,5 +1,6 @@
 package com.sqshine.controller;
 
+import com.sqshine.annotation.Permission;
 import com.sqshine.config.AuthorSettings;
 import com.sqshine.service.AsyncTaskService;
 import com.sqshine.service.DemoAnnotationService;
@@ -37,6 +38,18 @@ public class HelloController {
     @Value("${book.name}")
     private String bookName;
 
+
+    @GetMapping("/p1")
+    @Permission("permission")
+    public String permissonAllowed() {
+        return "permission allowed";
+    }
+
+    @GetMapping("/p2")
+    @Permission
+    public String permissonNotAllowed() {
+        return "permission 无法返回";
+    }
 
     @GetMapping("/hello")
     public String sayHello() {

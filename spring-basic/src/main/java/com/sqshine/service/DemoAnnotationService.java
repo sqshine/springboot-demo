@@ -1,6 +1,6 @@
 package com.sqshine.service;
 
-import com.sqshine.aop.MyAop;
+import com.sqshine.annotation.MyAop;
 import org.springframework.stereotype.Service;
 
 @Service

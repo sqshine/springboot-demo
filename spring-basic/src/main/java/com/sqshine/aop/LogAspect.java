@@ -1,5 +1,6 @@
 package com.sqshine.aop;
 
+import com.sqshine.annotation.MyAop;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -21,7 +22,7 @@ public class LogAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    @Pointcut("@annotation(MyAop)")
+    @Pointcut("@annotation(com.sqshine.annotation.MyAop)")
     public void annotationPointCut() {
     }
 
