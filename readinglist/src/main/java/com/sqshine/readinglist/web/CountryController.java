@@ -30,8 +30,11 @@ public class CountryController {
     }
 
     @CrossOrigin
-    @GetMapping("/{id}")
-    public Country getById(@PathVariable int id) {
+    @GetMapping({"/id/{id}","/id"})
+    public Country getById(@PathVariable(required = false) Integer id) {
+        if (id == null) {
+            id = 1;
+        }
         return countryService.getById(id);
     }
 
@@ -53,10 +56,11 @@ public class CountryController {
 
     /**
      * 直接返回String，配置使用fastjson时，需要加上produces = MediaType.APPLICATION_JSON_UTF8_VALUE，不会出现乱码
+     *
      * @return String
      */
-    @GetMapping(value = "t",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getT(){
+    @GetMapping(value = "t", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getT() {
         return "中文擦黑";
     }
 }
