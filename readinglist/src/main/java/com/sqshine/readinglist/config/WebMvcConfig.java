@@ -4,7 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sqshine.readinglist.domain.model.Result;
+import com.sqshine.readinglist.enums.JacksonSerializerFeature;
 import com.sqshine.readinglist.enums.ResultEnum;
 import com.sqshine.readinglist.filter.XssFilter;
 import com.sqshine.readinglist.interceptors.LogInterceptor;
@@ -20,6 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -28,6 +32,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -104,14 +109,16 @@ public class WebMvcConfig {
      *
      * @return HttpMessageConverters
      */
-    @Bean
+    //@Bean
     public HttpMessageConverters fastJsonHttpMessageConverters() {
         // 1、需要先定义一个 convert 转换消息的对象;
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
 
         //2、添加fastJson 的配置信息，比如：是否要格式化返回的json数据;
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteNullStringAsEmpty, SerializerFeature.WriteNullNumberAsZero);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteNullNumberAsZero,
+                SerializerFeature.WriteNullListAsEmpty);
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
 
         //2-1 处理中文乱码问题
@@ -124,6 +131,24 @@ public class WebMvcConfig {
         fastConverter.setFastJsonConfig(fastJsonConfig);
 
         return new HttpMessageConverters((HttpMessageConverter<?>) fastConverter);
+    }
+
+    @Bean
+    public HttpMessageConverters jacksonHttpMessageConverters() {
+        // 1、需要先定义一个 convert 转换消息的对象;
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+
+        //2、添加jackson的配置信息，比如：是否要格式化返回的json数据;
+        ObjectMapper objectMapper = converter.getObjectMapper();
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
+        objectMapper.setSerializerFactory(objectMapper.getSerializerFactory().withSerializerModifier(
+                new JacksonBeanSerializer(JacksonSerializerFeature.WriteNullStringAsEmpty, JacksonSerializerFeature.WriteNullNumberAsZero,
+                        JacksonSerializerFeature.WriteNullListAsEmpty, JacksonSerializerFeature.WriteNullBooleanAsFalse)));
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        //3、在convert中添加配置信息.
+        return new HttpMessageConverters((HttpMessageConverter<?>) converter);
     }
 
 
@@ -146,8 +171,26 @@ public class WebMvcConfig {
     @SuppressWarnings("unchecked")
     @Bean
     public FilterRegistrationBean xssFilterRegistration() {
+
+        //配置无需过滤的路径或者静态资源，如：css，imgage等
+        /*StringBuilder excludedUr = new StringBuilder();
+        excludedUr.append("/login/*");
+        excludedUr.append(",");
+        excludedUr.append("/favicon.ico");
+        excludedUr.append(",");
+        excludedUr.append("/js/*");*/
+
         FilterRegistrationBean registration = new FilterRegistrationBean(new XssFilter());
         registration.addUrlPatterns("/*");
+        //registration.addInitParameter("exclusions", excludedUr.toString());
+        //excludedUrls不起作用，需要调查
+        registration.addInitParameter("excludedUrls", "/favicon.ico,*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        registration.setName("XssFilter");
+        registration.setOrder(1);
+
+        //FilterRegistrationBean registration = new FilterRegistrationBean(new XssFilter());
+        //registration.addUrlPatterns("/*");
+
         return registration;
     }
 

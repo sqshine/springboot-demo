@@ -9,8 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,8 +23,20 @@ public class UserController {
 
     @PostConstruct
     public void init() {
-        users.put(1L, new User(1, "Jack", "Smith", 20));
-        users.put(2L, new User(2, "Peter", "Johnson", 25));
+        users.put(1L, new User(1L, "Jack", "Smith", 20));
+        users.put(2L, new User(2L, "Peter", "Johnson", 25));
+    }
+
+
+    @GetMapping("/list/{id}")
+    public List<User> getAllList(@PathVariable Integer id) {
+        List<User> users = new ArrayList<>();
+        users.add(new User(null, "李", null, 20, null, null));
+        users.add(new User(2L, "王", "五", 20, new Date(), true));
+        if (id == 1) {
+            return null;
+        }
+        return users;
     }
 
     /**
@@ -33,7 +44,6 @@ public class UserController {
      *
      * @return flux
      */
-
     @GetMapping
     public Flux<User> getAll() {
         return Flux.fromIterable(users.entrySet().stream()
