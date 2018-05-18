@@ -67,14 +67,4 @@ public class HelloController {
         logger.info("作者：{},性别：{}", AuthorSettings.me().getName(), AuthorSettings.me().getGender());
         return word;
     }
-
-    @GetMapping("/async")
-    public String async() {
-        for (int i = 0; i < 1000; i++) {
-            asyncTaskService.addAsyncTask(i);
-            asyncTaskService.addPlusAsyncTask(i);
-        }
-        return "OK";
-    }
-
 }
