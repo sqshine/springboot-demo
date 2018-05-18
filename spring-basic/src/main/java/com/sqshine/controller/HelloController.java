@@ -2,7 +2,6 @@ package com.sqshine.controller;
 
 import com.sqshine.annotation.Permission;
 import com.sqshine.config.AuthorSettings;
-import com.sqshine.service.AsyncTaskService;
 import com.sqshine.service.DemoAnnotationService;
 import com.sqshine.service.DemoMethodService;
 import com.sqshine.service.UseHelloService;
@@ -28,8 +27,7 @@ public class HelloController {
     private DemoAnnotationService demoAnnotationService;
     @Autowired
     private DemoMethodService demoMethodService;
-    @Autowired
-    private AsyncTaskService asyncTaskService;
+
 /*    @Autowired
     private AuthorSettings authorSettings;*/
 
