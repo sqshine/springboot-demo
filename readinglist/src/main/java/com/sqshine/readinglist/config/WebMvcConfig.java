@@ -1,9 +1,6 @@
 package com.sqshine.readinglist.config;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sqshine.readinglist.domain.model.Result;
@@ -21,7 +18,6 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -110,7 +106,7 @@ public class WebMvcConfig {
      *
      * @return HttpMessageConverters
      */
-    //@Bean
+    /*@Bean
     public HttpMessageConverters fastJsonHttpMessageConverters() {
         // 1、需要先定义一个 convert 转换消息的对象;
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
@@ -132,8 +128,13 @@ public class WebMvcConfig {
         fastConverter.setFastJsonConfig(fastJsonConfig);
 
         return new HttpMessageConverters((HttpMessageConverter<?>) fastConverter);
-    }
+    }*/
 
+    /**
+     * Jackson定制返回json
+     *
+     * @return HttpMessageConverters
+     */
     @Bean
     public HttpMessageConverters jacksonHttpMessageConverters() {
         // 1、需要先定义一个 convert 转换消息的对象;
