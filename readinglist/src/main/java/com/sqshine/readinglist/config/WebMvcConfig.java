@@ -29,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -151,20 +152,6 @@ public class WebMvcConfig {
         return new HttpMessageConverters((HttpMessageConverter<?>) converter);
     }
 
-
-
-    /*@SuppressWarnings("unchecked")
-    @Bean
-    public FilterRegistrationBean getXssFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new XssFilter());
-        //在一个filter注册时，如果没指定 DispatcherType ，它将匹配 FORWARD ， INCLUDE 和 REQUEST 。如果启用异步，它也将匹配 ASYNC 。如果迁移 web.xml 中没有 dispatcher 元素的filter，你需要自己指定一个 DispatcherType
-        registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.addUrlPatterns("/*");
-        registration.setName("XssFilter");
-        //registration.setOrder(1);
-        return registration;
-    }*/
-
     /**
      * xssFilter注册
      */
@@ -172,25 +159,14 @@ public class WebMvcConfig {
     @Bean
     public FilterRegistrationBean xssFilterRegistration() {
 
-        //配置无需过滤的路径或者静态资源，如：css，imgage等
-        /*StringBuilder excludedUr = new StringBuilder();
-        excludedUr.append("/login/*");
-        excludedUr.append(",");
-        excludedUr.append("/favicon.ico");
-        excludedUr.append(",");
-        excludedUr.append("/js/*");*/
-
         FilterRegistrationBean registration = new FilterRegistrationBean(new XssFilter());
+        //在一个filter注册时，如果没指定 DispatcherType ，它将匹配 FORWARD ， INCLUDE 和 REQUEST 。如果启用异步，它也将匹配 ASYNC 。如果迁移 web.xml 中没有 dispatcher 元素的filter，你需要自己指定一个 DispatcherType
+        registration.setDispatcherTypes(DispatcherType.REQUEST);
         registration.addUrlPatterns("/*");
-        //registration.addInitParameter("exclusions", excludedUr.toString());
-        //excludedUrls不起作用，需要调查
-        registration.addInitParameter("excludedUrls", "/favicon.ico,*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        //excludedUrls可以写到配置文件中,由XssFilter获取并解析，如果需要，可以增加带*的解析，如/druid/*
+        registration.addInitParameter("excludedUrls", "/favicon.ico,.js,.gif,.jpg,.png,.css,.ico,/country,/druid");
         registration.setName("XssFilter");
         registration.setOrder(1);
-
-        //FilterRegistrationBean registration = new FilterRegistrationBean(new XssFilter());
-        //registration.addUrlPatterns("/*");
-
         return registration;
     }
 
