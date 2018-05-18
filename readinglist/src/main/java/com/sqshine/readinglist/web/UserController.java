@@ -39,6 +39,13 @@ public class UserController {
         return users;
     }
 
+    @GetMapping("/id/1")
+    public User getOne() {
+        User user = new User(null, "李", null, 20, null, null);
+        user.setCreateTime(new Date());
+        return user;
+    }
+
     /**
      * 获取所有用户
      *

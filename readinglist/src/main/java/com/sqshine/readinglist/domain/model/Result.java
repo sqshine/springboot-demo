@@ -1,10 +1,15 @@
 package com.sqshine.readinglist.domain.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author sqshine
  *
  * http请求返回的最外层对象
  */
+@Getter
+@Setter
 public class Result<T> {
 
     /** 返回码 */
@@ -16,25 +21,5 @@ public class Result<T> {
 
     public Integer getCode() {
         return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

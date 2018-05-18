@@ -1,6 +1,8 @@
 package com.sqshine.readinglist.domain.model;
 
 
+import lombok.Data;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -9,8 +11,10 @@ import javax.validation.constraints.Size;
 /**
  * 对于复杂对象，需要@Valid
  * message最好放到常量中处理，不要硬编码
+ *
  * @author sqshine
  */
+@Data
 public class Post {
 
     @NotBlank(message = "title不能为空")
@@ -22,28 +26,4 @@ public class Post {
 
     @Valid
     private Book book;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
 }
