@@ -59,6 +59,7 @@ spring:
 ## 启动ConfigFilter
 #spring.datasource.druid.filter.config.enabled=true
 
+# durid  数据源配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -80,6 +81,19 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
+# Hikari数据源配置，需要去掉druid-spring-boot-starter才支持
+#  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://192.168.3.221:3307/spring_boot_test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+#    username: bestsign
+#    password: ssqian2016
+#    #hikari参数配置，其他参数一般用默认即可
+#    hikari:
+#      maximum-pool-size: 15 #连接池最大连接数: cpu核心数*2 + 硬盘数, 默认10 一个连接池一般来讲连接数在10-20个, 根据部署的应用程序数量可以推测出mysql的max_connections值
+#      max-lifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上
+#      read-only: false  #是否是只读数据源, 做读写分离时有用, 保证slave数据源的安全
+#      #connection-timeout: #等待连接池分配连接的最大时长 30s, 如果超过这个时间还没有分配到连接, commit会抛异常
 
 
 ########################################################
