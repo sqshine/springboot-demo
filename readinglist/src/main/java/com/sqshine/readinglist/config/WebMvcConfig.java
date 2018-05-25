@@ -50,8 +50,6 @@ public class WebMvcConfig {
     private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
 
     private static final String PROD = "prod";
-    private static final String DEV = "dev";
-    private static final String TEST = "test";
     private static final String UNKNOWN = "unknown";
     private static final String COMMA = ",";
 
@@ -78,11 +76,8 @@ public class WebMvcConfig {
                 // addPathPatterns 用于添加拦截规则
                 // excludePathPatterns 用户排除拦截
                 //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
-
-
-                //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
                 //开发环境忽略签名认证
-                if (!PROD.equals(env)) {
+                if (PROD.equals(env)) {
                     registry.addInterceptor(new HandlerInterceptorAdapter() {
                         @Override
                         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws JsonProcessingException {
@@ -111,7 +106,7 @@ public class WebMvcConfig {
      * @return HttpMessageConverters
      */
     @Bean
-    @Profile(PROD)
+    @Profile("prod")
     public HttpMessageConverters fastJsonHttpMessageConverters() {
         // 1、需要先定义一个 convert 转换消息的对象;
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
@@ -141,7 +136,7 @@ public class WebMvcConfig {
      * @return HttpMessageConverters
      */
     @Bean
-    @Profile({DEV, TEST})
+    @Profile({"dev", "test"})
     public HttpMessageConverters jacksonHttpMessageConverters() {
         // 1、需要先定义一个 convert 转换消息的对象;
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
@@ -222,6 +217,21 @@ public class WebMvcConfig {
         return StringUtils.equals(sign, requestSign);
     }
 
+    /**
+     * 获取用户真实IP地址，不使用request.getRemoteAddr();的原因是有可能用户使用了代理软件方式避免真实IP地址,
+     * 参考文章： http://developer.51cto.com/art/201111/305181.htm
+     *
+     * 可是，如果通过了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP值，究竟哪个才是真正的用户端的真实IP呢？
+     * 答案是取X-Forwarded-For中第一个非unknown的有效IP字符串。
+     *
+     * 如：X-Forwarded-For：192.168.1.110, 192.168.1.120, 192.168.1.130,
+     * 192.168.1.100
+     *
+     * 用户真实IP为： 192.168.1.110
+     *
+     * @param request httpRequest
+     * @return ip
+     */
     private String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
