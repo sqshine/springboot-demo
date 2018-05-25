@@ -102,8 +102,6 @@ public class WebMvcConfig {
                 }
                 registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
             }
-
-
         };
     }
 
