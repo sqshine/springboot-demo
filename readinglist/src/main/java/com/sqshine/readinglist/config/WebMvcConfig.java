@@ -1,6 +1,9 @@
 package com.sqshine.readinglist.config;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sqshine.readinglist.domain.model.Result;
@@ -8,6 +11,7 @@ import com.sqshine.readinglist.enums.JacksonSerializerFeature;
 import com.sqshine.readinglist.enums.ResultEnum;
 import com.sqshine.readinglist.filter.XssFilter;
 import com.sqshine.readinglist.interceptors.LogInterceptor;
+import com.sqshine.readinglist.util.JacksonUtil;
 import com.sqshine.readinglist.util.ResultUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +22,8 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -33,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sqshine
@@ -42,10 +49,11 @@ public class WebMvcConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
 
+    private static final String PROD = "prod";
     private static final String DEV = "dev";
+    private static final String TEST = "test";
     private static final String UNKNOWN = "unknown";
     private static final String COMMA = ",";
-
 
     /**
      * 当前激活的配置文件
@@ -74,20 +82,18 @@ public class WebMvcConfig {
 
                 //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
                 //开发环境忽略签名认证
-                if (!DEV.equals(env)) {
+                if (!PROD.equals(env)) {
                     registry.addInterceptor(new HandlerInterceptorAdapter() {
                         @Override
-                        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+                        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws JsonProcessingException {
                             //验证签名
                             boolean pass = validateSign(request);
                             if (pass) {
                                 return true;
                             } else {
-                                logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
-                                        request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
-
+                                Map<String, String[]> parameterMap = request.getParameterMap();
+                                logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}", request.getRequestURI(), getIpAddress(request), JacksonUtil.toJSONString(parameterMap));
                                 Result result = ResultUtil.error(ResultEnum.UNAUTHORIZED);
-
                                 responseResult(response, result);
                                 return false;
                             }
@@ -106,7 +112,8 @@ public class WebMvcConfig {
      *
      * @return HttpMessageConverters
      */
-    /*@Bean
+    @Bean
+    @Profile(PROD)
     public HttpMessageConverters fastJsonHttpMessageConverters() {
         // 1、需要先定义一个 convert 转换消息的对象;
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
@@ -128,7 +135,7 @@ public class WebMvcConfig {
         fastConverter.setFastJsonConfig(fastJsonConfig);
 
         return new HttpMessageConverters((HttpMessageConverter<?>) fastConverter);
-    }*/
+    }
 
     /**
      * Jackson定制返回json
@@ -136,6 +143,7 @@ public class WebMvcConfig {
      * @return HttpMessageConverters
      */
     @Bean
+    @Profile({DEV, TEST})
     public HttpMessageConverters jacksonHttpMessageConverters() {
         // 1、需要先定义一个 convert 转换消息的对象;
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
@@ -176,7 +184,7 @@ public class WebMvcConfig {
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         response.setStatus(200);
         try {
-            response.getWriter().write(JSON.toJSONString(result));
+            response.getWriter().write(JacksonUtil.toJSONString(result));
         } catch (IOException ex) {
             logger.error(ex.getMessage());
         }

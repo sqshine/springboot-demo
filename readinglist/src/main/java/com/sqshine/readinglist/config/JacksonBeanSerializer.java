@@ -17,7 +17,7 @@ public class JacksonBeanSerializer extends BeanSerializerModifier {
     final private JsonSerializer<Object> nullListJsonSerializer;
     final private JsonSerializer<Object> nullStringJsonSerializer;
 
-    JacksonBeanSerializer(JacksonSerializerFeature... features) {
+    public JacksonBeanSerializer(JacksonSerializerFeature... features) {
         int config = 0;
         for (JacksonSerializerFeature feature : features) {
             config |= feature.mask;

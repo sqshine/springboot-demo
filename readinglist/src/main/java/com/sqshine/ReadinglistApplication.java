@@ -1,5 +1,6 @@
 package com.sqshine;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import tk.mybatis.spring.annotation.MapperScan;//如果使用通用mapper，需要使用 tk.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -8,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author sqshine
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 @MapperScan("com.sqshine.readinglist.domain.mapper")
 public class ReadinglistApplication implements CommandLineRunner {
 

@@ -16,7 +16,8 @@
     </springProfile>
     <springProfile name="prod">
         <logger name="com.sqshine" level="INFO" additivity="false">
-            <appender-ref ref="FILE"/>
+            <!-- 生产环境改为 FILE -->
+            <appender-ref ref="CONSOLE"/>
         </logger>
     </springProfile>
     <!--    <if condition='property("spring.profiles.active").contains("dev")'>
