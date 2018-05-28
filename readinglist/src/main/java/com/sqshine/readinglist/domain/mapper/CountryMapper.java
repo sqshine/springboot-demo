@@ -5,9 +5,11 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CountryMapper {
     @Select("select * from country")
     List<Country> getAll();
@@ -16,7 +18,8 @@ public interface CountryMapper {
     Country getById(@Param("id") int id);
 
     @Insert("insert into country(countryname,countrycode) values(#{countryname},#{countrycode})")
-    @Options(useGeneratedKeys = true, keyColumn = "Id")//返回自动生成的主键
+    @Options(useGeneratedKeys = true, keyColumn = "Id")
+//返回自动生成的主键
     void save(Country country);
 
 }
