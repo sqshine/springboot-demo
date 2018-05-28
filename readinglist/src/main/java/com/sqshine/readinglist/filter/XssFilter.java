@@ -31,11 +31,13 @@ public class XssFilter implements Filter {
         // List<String> excludedUrls = Arrays.asList("/favicon.ico", ".js", ".gif", ".jpg", ".png", ".css", ".ico", "/country", "/druid");
 
         boolean match;
-        for (String excludeUrl : excludedUrls) {
-            match = path.contains(excludeUrl);
-            if (match) {
-                chain.doFilter(request, response);
-                return;
+        if (excludedUrls != null) {
+            for (String excludeUrl : excludedUrls) {
+                match = path.contains(excludeUrl);
+                if (match) {
+                    chain.doFilter(request, response);
+                    return;
+                }
             }
         }
         chain.doFilter(new XssHttpServletRequestWraper(req), response);
