@@ -30,8 +30,8 @@ public class CountryController {
     }
 
     @CrossOrigin
-    @GetMapping({"/id/{id}","/id"})
-    public Country getById(@PathVariable(required = false) Integer id) {
+    @GetMapping({"/id/{id}", "/id"})
+    public Country getById(@PathVariable(required = false, value = "id") Integer id) {
         if (id == null) {
             id = 1;
         }
