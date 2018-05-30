@@ -45,9 +45,8 @@ public class CountryController {
         return new PageInfo<>(countries);
     }
 
-    @GetMapping("/add")
-    public Country save() {
-        Country country = new Country();
+    @PostMapping("/add")
+    public Country save(@RequestBody Country country) {
         country.setCountrycode("ZH");
         country.setCountryname("中国");
         countryService.save(country);
@@ -59,8 +58,9 @@ public class CountryController {
      *
      * @return String
      */
-    @GetMapping(value = "t", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getT() {
-        return "中文擦黑";
+    @GetMapping(value = "/getString", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getString(@RequestParam("str") String str) {
+        str += " 我自远方来，为你而驻足！";
+        return str;
     }
 }

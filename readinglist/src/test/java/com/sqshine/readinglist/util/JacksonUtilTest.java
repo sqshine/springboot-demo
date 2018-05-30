@@ -16,12 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -32,45 +34,56 @@ import java.util.List;
  * @since 1.0.0
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @Slf4j
 public class JacksonUtilTest {
 
     private List<User> users = new ArrayList<>();
+    private Map<String, User> map = new HashMap<>();
+    private static final String DATEFORMAT = "yyyy-MM-dd HH:mm:ss";
+
 
     @Before
     public void setup() {
-        users.add(new User(null, "李", null, 10, null, null));
-        users.add(new User(2L, "王", "五", 20, new Date(), true));
+        User user = new User(null, "李", null, 10, null, null);
+        User user1 = new User(2L, "王", "五", 20, new Date(), true);
+        users.add(user);
+        users.add(user1);
+        map.put("u1", user);
+        map.put("u2", user1);
     }
 
     @Test
-    public void toJSONString() throws JsonProcessingException {
+    public void toJSONStringTest() throws JsonProcessingException {
         String jsonString = JacksonUtil.toJSONString(users);
+        assertThat(jsonString, containsString("李"));
         log.info(jsonString);
     }
 
     @Test
-    public void toJSONStringWithDateFormat() {
+    public void toJSONStringWithDateFormatTest() throws JsonProcessingException {
+        String jsonString = JacksonUtil.toJSONStringWithDateFormat(users, DATEFORMAT);
+        assertThat(jsonString, containsString("李"));
+        log.info(jsonString);
     }
 
     @Test
-    public void parseObject() {
+    public void parseMapTest() throws IOException {
+        String jsonString = JacksonUtil.toJSONString(map);
+        log.info(jsonString);
+        Map<String, User> map1 = JacksonUtil.parseMap(jsonString, Map.class, String.class, User.class);
+        User u1 = map1.get("u1");
+        assertThat(u1.getFirstname(), equalTo("李"));
+        Map<String, User> map2 = JacksonUtil.parseMap(jsonString, String.class, User.class);
+        User u2 = map1.get("u2");
+        assertThat(u2.getFirstname(), equalTo("王"));
     }
 
-    @Test
-    public void parseMap() {
-    }
 
     @Test
-    public void parseMap1() {
-    }
-
-    @Test
-    public void parseMap2() {
-    }
-
-    @Test
-    public void parseList() {
+    public void parseListTest() throws IOException {
+        String jsonString = JacksonUtil.toJSONString(users);
+        List<User> userList = JacksonUtil.parseList(jsonString, User.class);
+        assertThat(userList.get(0).getFirstname(), equalTo("李"));
+        assertThat(userList.size(), equalTo(2));
     }
 }
