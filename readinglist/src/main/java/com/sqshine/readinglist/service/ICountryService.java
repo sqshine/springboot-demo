@@ -11,5 +11,5 @@ public interface ICountryService {
 
     Country getById(@Param("id") int id);
 
-    void save(Country country);
+    Integer save(Country country);
 }

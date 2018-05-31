@@ -34,8 +34,8 @@ public class CountryService implements ICountryService {
 
     @Override
     @Transactional
-    public void save(Country country) {
-        countryMapper.save(country);
+    public Integer save(Country country) {
+        return countryMapper.save(country);
     }
 
 }

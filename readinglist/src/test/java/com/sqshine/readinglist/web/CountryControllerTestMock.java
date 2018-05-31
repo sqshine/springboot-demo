@@ -10,26 +10,28 @@
  */
 package com.sqshine.readinglist.web;
 
+import com.sqshine.readinglist.domain.mapper.CountryMapper;
 import com.sqshine.readinglist.domain.model.Country;
-import com.sqshine.readinglist.service.impl.CountryService;
 import com.sqshine.readinglist.util.JacksonUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -45,53 +47,66 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * 参考代码 https://hellokoding.com/restful-apis-example-with-spring-boot-integration-test-with-mockmvc-ui-integration-with-vuejs/
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(CountryController.class)
-//@MybatisTest
-@Import({CountryService.class})
-@AutoConfigureMybatis
-public class CountryControllerTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+//@Import(CountryService.class)
+public class CountryControllerTestMock {
 
     @Autowired
     private MockMvc mockMvc;
 
+    //@Autowired
+    //private CountryService countryService;
+
+    @MockBean
+    private CountryMapper countryMapper;
+
+    private List<Country> countries = new ArrayList<>();
+
     @Before
     public void setUp() {
+        for (int i = 0; i < 10; i++) {
+            Country country = new Country();
+            country.setCountrycode("country_code:" + i);
+            country.setCountryname("country_name:" + i);
+            country.setId(i);
+            countries.add(country);
+        }
     }
 
     @Test
     public void getAllTest() throws Exception {
+        when(countryMapper.getAll()).thenReturn(countries);
         MvcResult mvcResult = mockMvc.perform(get("/country"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string(containsString("Afghanistan")))
-                .andExpect(jsonPath("$.*", hasSize(183)))
-                .andExpect(jsonPath("$.[0].id", is(1)))
-                .andExpect(jsonPath("$.[0].countryname", is("Angola")))
-                .andExpect(jsonPath("$.[0].countrycode", is("AO")))
+                .andExpect(content().json(JacksonUtil.toJSONString(countries)))
+                .andExpect(jsonPath("$.*", hasSize(countries.size())))
+                .andExpect(content().string(containsString("country_name:1")))
+                .andExpect(jsonPath("$.[0].id", is(0)))
+                .andExpect(jsonPath("$.[0].countryname", is("country_name:0")))
+                .andExpect(jsonPath("$.[0].countrycode", is("country_code:0")))
+                .andExpect(jsonPath("$.[9].id", is(9)))
                 .andReturn();
         String result = mvcResult.getResponse().getContentAsString();
-
         List<Country> countryList = JacksonUtil.parseList(result, Country.class);
-        assertThat(countryList.size(), equalTo(183));
+        assertThat(countryList.size(), equalTo(10));
         Country country = countryList.get(0);
-        assertThat(country.getCountrycode(), equalTo("AO"));
+        assertThat(country.getId(), equalTo(0));
     }
 
     @Test
     public void getByIdTest() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/country/id/1"))
+        Country country = countries.get(1);
+        when(countryMapper.getById(1)).thenReturn(country);
+        mockMvc.perform(get("/country/id/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("id", is(1)))
-                .andExpect(jsonPath("countryname", equalTo("Angola")))
-                .andExpect(jsonPath("$.countrycode", is("AO")))
-                .andReturn();
-        String result = mvcResult.getResponse().getContentAsString();
-        Country country = JacksonUtil.parseObject(result, Country.class);
-
-        assertThat(country.getId(), equalTo(1));
+                .andExpect(jsonPath("countryname", equalTo("country_name:1")))
+                .andExpect(jsonPath("$.countrycode", is("country_code:1")));
     }
 
     @Test
@@ -101,27 +116,28 @@ public class CountryControllerTest {
     @Test
     @Transactional
     public void saveTest() throws Exception {
-        Country country = new Country();
-        MvcResult mvcResult = mockMvc.perform(post("/country/add")
+        Country country = countries.get(1);
+        when(countryMapper.save(country)).thenReturn(2);
+        mockMvc.perform(post("/country/add")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(JacksonUtil.toJSONString(country)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id", greaterThan(0)))
-                .andExpect(jsonPath("countryname", is("中国")))
-                .andExpect(jsonPath("$.countrycode", is("ZH")))
-                .andReturn();
-        String result = mvcResult.getResponse().getContentAsString();
-        Country country1 = JacksonUtil.parseObject(result, Country.class);
-        assertThat(country1.getId(), greaterThan(0));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("id", is(1)))
+                .andExpect(jsonPath("countryname", equalTo("中国")))
+                .andExpect(jsonPath("$.countrycode", is("ZH")));
     }
 
     @Test
     public void getStringTest() throws Exception {
+        String str = "地动天摇 我自远方来，为你而驻足！";
+        //when(countryController.getString(anyString())).thenReturn("天为乾，地为坤，百世轮回宇宙间,情仇似梦事如烟！");
         mockMvc.perform(get("/country/getString")
                 .param("str", "地动天摇"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("地动天摇 我自远方来，为你而驻足！"));
+                .andExpect(content().string(str));
+
     }
 }
