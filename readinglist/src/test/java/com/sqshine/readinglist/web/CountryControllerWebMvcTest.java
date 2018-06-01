@@ -16,9 +16,9 @@ import com.sqshine.readinglist.util.JacksonUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -31,9 +31,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -47,12 +47,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @create 2018/5/28
  * @since 1.0.0
  * 参考代码 https://hellokoding.com/restful-apis-example-with-spring-boot-integration-test-with-mockmvc-ui-integration-with-vuejs/
+ * 检测是否可以使用 mock service 的方式
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-//@Import(CountryService.class)
-public class CountryControllerTestMock {
+@WebMvcTest(CountryController.class)
+@AutoConfigureMybatis
+public class CountryControllerWebMvcTest {
+
+    private List<Country> countries = new ArrayList<>();
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,18 +62,13 @@ public class CountryControllerTestMock {
     @MockBean
     private CountryService countryService;
 
-    //@MockBean
-    //private CountryMapper countryMapper;
-
-    private List<Country> countries = new ArrayList<>();
-
     @Before
     public void setUp() {
         for (int i = 0; i < 10; i++) {
             Country country = new Country();
             country.setCountrycode("country_code:" + i);
-            country.setCountryname("country_name:" + i);
             country.setId(i);
+            country.setCountryname("country_name:" + i);
             countries.add(country);
         }
     }
@@ -82,8 +79,8 @@ public class CountryControllerTestMock {
         MvcResult mvcResult = mockMvc.perform(get("/country"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json(JacksonUtil.toJSONString(countries)))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.*", hasSize(countries.size())))
                 .andExpect(content().string(containsString("country_name:1")))
                 .andExpect(jsonPath("$.[0].id", is(0)))
@@ -140,6 +137,5 @@ public class CountryControllerTestMock {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(str));
-
     }
 }

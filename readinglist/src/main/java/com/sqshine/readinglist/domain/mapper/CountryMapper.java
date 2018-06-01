@@ -30,7 +30,7 @@ public interface CountryMapper {
      * @return Country
      */
     @Select("select * from country where id = #{id}")
-    Country getById(@Param("id") int id);
+    Country getById(@Param("id") Integer id);
 
     /**
      * 返回自动生成的主键

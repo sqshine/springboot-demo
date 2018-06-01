@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -51,7 +51,7 @@ public class CountryMapperTest {
     public void getAll() {
         List<Country> countries = countryMapper.getAll();
         //log.debug("countries={}", JacksonUtil.toJSONString(countries));
-        assertNotNull(countries);
+        assertThat(countries).isNotNull();
     }
 
     @Test

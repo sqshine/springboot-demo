@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -73,9 +73,9 @@ public class CountryControllerTest {
         String result = mvcResult.getResponse().getContentAsString();
 
         List<Country> countryList = JacksonUtil.parseList(result, Country.class);
-        assertThat(countryList.size(), equalTo(183));
+        assertThat(countryList.size()).isEqualTo(183);
         Country country = countryList.get(0);
-        assertThat(country.getCountrycode(), equalTo("AO"));
+        assertThat(country.getCountrycode()).isEqualTo("AO");
     }
 
     @Test
@@ -91,7 +91,7 @@ public class CountryControllerTest {
         String result = mvcResult.getResponse().getContentAsString();
         Country country = JacksonUtil.parseObject(result, Country.class);
 
-        assertThat(country.getId(), equalTo(1));
+        assertThat(country.getId()).isEqualTo(1);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class CountryControllerTest {
                 .andReturn();
         String result = mvcResult.getResponse().getContentAsString();
         Country country1 = JacksonUtil.parseObject(result, Country.class);
-        assertThat(country1.getId(), greaterThan(0));
+        assertThat(country1.getId()).isGreaterThan(0);
     }
 
     @Test

@@ -11,7 +11,6 @@
 package com.sqshine.readinglist.domain.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sqshine.readinglist.domain.model.SysUser;
 import com.sqshine.readinglist.util.JacksonUtil;
@@ -24,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -48,7 +47,7 @@ public class SysUserMapperTest2 {
 
         List<SysUser> userList = sysUserMapper.selectAll();
 
-        assertEquals(6, userList.size());
+        assertThat(userList.size()).isEqualTo(6);
 
         log.debug("pageinfo:{}", JacksonUtil.toJSONString(new PageInfo<>(userList)));
     }

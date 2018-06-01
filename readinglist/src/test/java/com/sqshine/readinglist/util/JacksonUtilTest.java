@@ -21,9 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.util.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -55,14 +53,14 @@ public class JacksonUtilTest {
     @Test
     public void toJSONStringTest() throws JsonProcessingException {
         String jsonString = JacksonUtil.toJSONString(users);
-        assertThat(jsonString, containsString("李"));
+        assertThat(jsonString).contains("李");
         log.info(jsonString);
     }
 
     @Test
     public void toJSONStringWithDateFormatTest() throws JsonProcessingException {
         String jsonString = JacksonUtil.toJSONStringWithDateFormat(users, DATEFORMAT);
-        assertThat(jsonString, containsString("李"));
+        assertThat(jsonString).contains("李");
         log.info(jsonString);
     }
 
@@ -72,10 +70,10 @@ public class JacksonUtilTest {
         log.info(jsonString);
         Map<String, User> map1 = JacksonUtil.parseMap(jsonString, Map.class, String.class, User.class);
         User u1 = map1.get("u1");
-        assertThat(u1.getFirstname(), equalTo("李"));
+        assertThat(u1.getFirstname()).isEqualTo("李");
         Map<String, User> map2 = JacksonUtil.parseMap(jsonString, String.class, User.class);
-        User u2 = map1.get("u2");
-        assertThat(u2.getFirstname(), equalTo("王"));
+        User u2 = map2.get("u2");
+        assertThat(u2.getFirstname()).isEqualTo("王");
     }
 
 
@@ -83,7 +81,7 @@ public class JacksonUtilTest {
     public void parseListTest() throws IOException {
         String jsonString = JacksonUtil.toJSONString(users);
         List<User> userList = JacksonUtil.parseList(jsonString, User.class);
-        assertThat(userList.get(0).getFirstname(), equalTo("李"));
-        assertThat(userList.size(), equalTo(2));
+        assertThat(userList.get(0).getFirstname()).isEqualTo("李");
+        assertThat(userList.size()).isEqualTo(2);
     }
 }

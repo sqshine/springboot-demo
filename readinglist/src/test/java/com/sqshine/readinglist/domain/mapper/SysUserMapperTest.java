@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -49,7 +49,7 @@ public class SysUserMapperTest {
 
         List<SysUser> userList = sysUserMapper.selectAll();
 
-        assertEquals(2, userList.size());
+        assertThat(userList.size()).isEqualTo(2);
 
         log.debug("pageinfo:{}", JacksonUtil.toJSONString(new PageInfo<>(userList)));
     }
