@@ -99,8 +99,7 @@ public class JacksonUtil {
      * json转map
      */
     public static <K, V> Map<K, V> parseMap(String jsonString, Class<K> keyClass, Class<V> valueClass) throws IOException {
-        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(Map.class, keyClass, valueClass);
-        return objectMapper.readValue(jsonString, javaType);
+        return parseMap(jsonString, Map.class, keyClass, valueClass);
     }
 
     /**
