@@ -48,13 +48,13 @@ public class JacksonUtil {
                         JacksonSerializerFeature.WriteNullStringAsEmpty,
                         JacksonSerializerFeature.WriteNullNumberAsZero,
                         JacksonSerializerFeature.WriteNullListAsEmpty,
-                        JacksonSerializerFeature.WriteNullBooleanAsFalse)));
-        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        //不输出null的对象
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        //pretty json
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+                        JacksonSerializerFeature.WriteNullBooleanAsFalse)))
+                .configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                //不输出null的对象
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                //pretty json
+                .enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     public static ObjectMapper getInstance() {

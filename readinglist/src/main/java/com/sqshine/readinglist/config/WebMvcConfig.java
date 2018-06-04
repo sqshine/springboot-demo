@@ -5,7 +5,6 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -127,7 +126,6 @@ public class WebMvcConfig {
         List<MediaType> fastMediaTypes = new ArrayList<>();
         fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
         fastConverter.setSupportedMediaTypes(fastMediaTypes);
-        //fastConverter.setDefaultCharset(Charset.forName("UTF-8"));
 
         //3、在convert中添加配置信息.
         fastConverter.setFastJsonConfig(fastJsonConfig);
@@ -148,18 +146,17 @@ public class WebMvcConfig {
 
         //2、添加jackson的配置信息，比如：是否要格式化返回的json数据;
         ObjectMapper objectMapper = converter.getObjectMapper();
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        //不输出null的对象
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        //pretty json
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        objectMapper.setSerializerFactory(objectMapper.getSerializerFactory().withSerializerModifier(
-                new JacksonBeanSerializer(JacksonSerializerFeature.WriteNullStringAsEmpty,
-                        JacksonSerializerFeature.WriteNullNumberAsZero,
-                        JacksonSerializerFeature.WriteNullListAsEmpty,
-                        JacksonSerializerFeature.WriteNullBooleanAsFalse)));
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+                //不输出null的对象
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                //pretty json
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .setSerializerFactory(objectMapper.getSerializerFactory().withSerializerModifier(
+                        new JacksonBeanSerializer(JacksonSerializerFeature.WriteNullStringAsEmpty,
+                                JacksonSerializerFeature.WriteNullNumberAsZero,
+                                JacksonSerializerFeature.WriteNullListAsEmpty,
+                                JacksonSerializerFeature.WriteNullBooleanAsFalse)))
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         //3、在convert中添加配置信息.
         return new HttpMessageConverters((HttpMessageConverter<?>) converter);
