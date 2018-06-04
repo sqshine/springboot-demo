@@ -10,11 +10,13 @@
  */
 package com.sqshine.readinglist.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sqshine.readinglist.config.JacksonBeanSerializer;
 import com.sqshine.readinglist.enums.JacksonSerializerFeature;
 
@@ -49,6 +51,10 @@ public class JacksonUtil {
                         JacksonSerializerFeature.WriteNullBooleanAsFalse)));
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        //不输出null的对象
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        //pretty json
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     public static ObjectMapper getInstance() {
@@ -60,7 +66,7 @@ public class JacksonUtil {
      */
     public static <T> String toJSONString(T t) throws JsonProcessingException {
         objectMapper.setDateFormat(new SimpleDateFormat(DATEFORMAT));
-        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(t);
+        return objectMapper.writeValueAsString(t);
     }
 
     /**
@@ -70,7 +76,7 @@ public class JacksonUtil {
         if (dateFormat != null && dateFormat.length() != 0) {
             objectMapper.setDateFormat(new SimpleDateFormat(dateFormat));
         }
-        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+        return objectMapper.writeValueAsString(object);
     }
 
     /**

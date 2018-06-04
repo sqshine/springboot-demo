@@ -66,9 +66,9 @@ public class CountryControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().string(containsString("Afghanistan")))
                 .andExpect(jsonPath("$.*", hasSize(183)))
-                .andExpect(jsonPath("$.[0].id", is(1)))
-                .andExpect(jsonPath("$.[0].countryname", is("Angola")))
-                .andExpect(jsonPath("$.[0].countrycode", is("AO")))
+                .andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$.[0].countryname").value("Angola"))
+                .andExpect(jsonPath("$.[0].countrycode").value("AO"))
                 .andReturn();
         String result = mvcResult.getResponse().getContentAsString();
 
@@ -84,9 +84,9 @@ public class CountryControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("id", is(1)))
-                .andExpect(jsonPath("countryname", equalTo("Angola")))
-                .andExpect(jsonPath("$.countrycode", is("AO")))
+                .andExpect(jsonPath("id").value(1))
+                .andExpect(jsonPath("countryname").value("Angola"))
+                .andExpect(jsonPath("$.countrycode").value("AO"))
                 .andReturn();
         String result = mvcResult.getResponse().getContentAsString();
         Country country = JacksonUtil.parseObject(result, Country.class);
@@ -108,8 +108,8 @@ public class CountryControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", greaterThan(0)))
-                .andExpect(jsonPath("countryname", is("中国")))
-                .andExpect(jsonPath("$.countrycode", is("ZH")))
+                .andExpect(jsonPath("countryname").value("中国"))
+                .andExpect(jsonPath("$.countrycode").value("ZH"))
                 .andReturn();
         String result = mvcResult.getResponse().getContentAsString();
         Country country1 = JacksonUtil.parseObject(result, Country.class);

@@ -3,6 +3,7 @@ package com.sqshine.readinglist.web;
 import com.alibaba.fastjson.JSON;
 import com.sqshine.readinglist.domain.model.Book;
 import com.sqshine.readinglist.domain.model.Post;
+import com.sqshine.readinglist.domain.model.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -96,5 +97,10 @@ public class Home {
             return JSON.toJSONString(bindingResult);
         }
         return "success";
+    }
+
+    @GetMapping("/baidu")
+    public String redirectToBaidu() {
+        return "redirect:" + "http://www.baidu.com";
     }
 }

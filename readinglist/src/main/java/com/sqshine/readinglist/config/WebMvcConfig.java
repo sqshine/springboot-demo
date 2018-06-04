@@ -3,9 +3,12 @@ package com.sqshine.readinglist.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sqshine.readinglist.domain.model.Result;
 import com.sqshine.readinglist.enums.JacksonSerializerFeature;
 import com.sqshine.readinglist.enums.ResultEnum;
@@ -113,9 +116,11 @@ public class WebMvcConfig {
 
         //2、添加fastJson 的配置信息，比如：是否要格式化返回的json数据;
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteNullStringAsEmpty,
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat,
+                SerializerFeature.WriteNullStringAsEmpty,
                 SerializerFeature.WriteNullNumberAsZero,
-                SerializerFeature.WriteNullListAsEmpty);
+                SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullBooleanAsFalse);
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
 
         //2-1 处理中文乱码问题
@@ -144,10 +149,16 @@ public class WebMvcConfig {
         //2、添加jackson的配置信息，比如：是否要格式化返回的json数据;
         ObjectMapper objectMapper = converter.getObjectMapper();
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        //不输出null的对象
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        //pretty json
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         objectMapper.setSerializerFactory(objectMapper.getSerializerFactory().withSerializerModifier(
-                new JacksonBeanSerializer(JacksonSerializerFeature.WriteNullStringAsEmpty, JacksonSerializerFeature.WriteNullNumberAsZero,
-                        JacksonSerializerFeature.WriteNullListAsEmpty, JacksonSerializerFeature.WriteNullBooleanAsFalse)));
+                new JacksonBeanSerializer(JacksonSerializerFeature.WriteNullStringAsEmpty,
+                        JacksonSerializerFeature.WriteNullNumberAsZero,
+                        JacksonSerializerFeature.WriteNullListAsEmpty,
+                        JacksonSerializerFeature.WriteNullBooleanAsFalse)));
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         //3、在convert中添加配置信息.
@@ -220,13 +231,13 @@ public class WebMvcConfig {
     /**
      * 获取用户真实IP地址，不使用request.getRemoteAddr();的原因是有可能用户使用了代理软件方式避免真实IP地址,
      * 参考文章： http://developer.51cto.com/art/201111/305181.htm
-     *
+     * <p>
      * 可是，如果通过了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP值，究竟哪个才是真正的用户端的真实IP呢？
      * 答案是取X-Forwarded-For中第一个非unknown的有效IP字符串。
-     *
+     * <p>
      * 如：X-Forwarded-For：192.168.1.110, 192.168.1.120, 192.168.1.130,
      * 192.168.1.100
-     *
+     * <p>
      * 用户真实IP为： 192.168.1.110
      *
      * @param request httpRequest
