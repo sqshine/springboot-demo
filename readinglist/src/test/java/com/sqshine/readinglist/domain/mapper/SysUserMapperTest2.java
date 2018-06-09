@@ -15,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 import com.sqshine.readinglist.domain.model.SysUser;
 import com.sqshine.readinglist.util.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -43,6 +44,7 @@ public class SysUserMapperTest2 {
     private SysUserMapper sysUserMapper;
 
     @Test
+    @Ignore
     public void queryUserListPaged() throws JsonProcessingException {
 
         List<SysUser> userList = sysUserMapper.selectAll();
