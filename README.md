@@ -1,4 +1,7 @@
-# springboot-demo
+#修改版本
+mvn versions:set -DnewVersion=3.22.0-SNAPSHOT 
+
+#springboot-demo
 spring boot 示例程序
 
 配置druid多数据源的方法
