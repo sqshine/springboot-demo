@@ -120,7 +120,7 @@ spring:
 
 mapper:
   mappers:
-      - com.sqshine.readinglist.util.MyMapper
+      - com.sqshine.readinglist.util.BaseMapper
   not-empty: false
   identity: MYSQL
 
@@ -191,7 +191,7 @@ spring:
       #connection-timeout: #等待连接池分配连接的最大时长 30s, 如果超过这个时间还没有分配到连接, commit会抛异常
 mapper:
   mappers:
-      - com.sqshine.readinglist.util.MyMapper
+      - com.sqshine.readinglist.util.BaseMapper
   not-empty: false
   identity: MYSQL
 
@@ -239,7 +239,7 @@ server:
 
 mapper:
   mappers:
-      - com.sqshine.readinglist.util.MyMapper
+      - com.sqshine.readinglist.util.BaseMapper
   not-empty: false
   identity: h2
 

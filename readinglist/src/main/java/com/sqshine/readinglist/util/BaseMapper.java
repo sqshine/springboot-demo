@@ -29,16 +29,16 @@ import tk.mybatis.mapper.common.*;
 import tk.mybatis.mapper.common.special.InsertListMapper;
 
 /**
- * 继承自己的MyMapper
- * Spring Boot 集成 MyBatis, 分页插件 PageHelper, 通用 Mapper，参考https://github.com/abel533/MyBatis-Spring-Boot
+ * 继承自己的BaseMapper
+ * Spring Boot 集成 MyBatis, 分页插件 PageHelper, 通用 Mapper，参考https://github.com/abel533/MyBatis-Spring-Boot and https://github.com/abel533/Mapper
  * 特别注意，该接口不能被扫描到，否则会出错
  *
  * @author sqshine
  */
-public interface MyMapper<T>
+public interface BaseMapper<T>
         extends Mapper<T>,
         MySqlMapper<T>,
-        BaseMapper<T>,
+        tk.mybatis.mapper.common.BaseMapper<T>,
         ConditionMapper<T>,
         IdsMapper<T>,
         InsertListMapper<T> {
@@ -46,7 +46,7 @@ public interface MyMapper<T>
     // 特别注意，该接口不能被扫描到，否则会出错
 }
 
-/*public interface MyMapper<T>
+/*public interface BaseMapper<T>
         extends Mapper<T>,
         MySqlMapper<T>,
         BaseMapper<T>,

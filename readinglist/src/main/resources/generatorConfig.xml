@@ -13,7 +13,7 @@
         <property name="endingDelimiter" value="`"/>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="com.sqshine.readinglist.util.MyMapper"/>
+            <property name="mappers" value="com.sqshine.readinglist.util.BaseMapper"/>
         </plugin>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"

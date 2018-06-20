@@ -58,7 +58,7 @@ mybatis:
 
 mapper:
   mappers:
-      - com.sqshine.readinglist.util.MyMapper
+      - com.sqshine.readinglist.util.BaseMapper
   not-empty: false
   identity: h2
 

@@ -2,7 +2,7 @@ package com.sqshine.readinglist.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sqshine.readinglist.util.MyMapper;
+import com.sqshine.readinglist.util.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public abstract class AbstractService<T, ID extends Serializable> implements ISe
     //private Class<T> entityClass;
 
     @Autowired
-    protected MyMapper<T> mapper;
+    protected BaseMapper<T> mapper;
 
   /* public AbstractService() {
         ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
